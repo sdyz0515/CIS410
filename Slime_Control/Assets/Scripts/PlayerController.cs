@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
 	private int direction = 1;
 	private bool eating = false;
 	private Animator animator;
+	private bool isJumping = false;
 
 
 
@@ -36,7 +37,6 @@ public class PlayerController : MonoBehaviour
 	void FixedUpdate () 
 	{
 		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
-
 		float move = Input.GetAxis ("Horizontal");
 		Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
 		rb2d.velocity = movement;
@@ -52,11 +52,20 @@ public class PlayerController : MonoBehaviour
 	}
 
 	void Update () 
-	{
+	{   
+
+		if (grounded) {
+			isJumping = false;
+		}
+
 		if (grounded && Input.GetKeyDown (KeyCode.Space)) 
-		{
-			rb2d.AddForce (new Vector2 (0, jumpForce));
-			animator.SetTrigger ("Jump");
+		{   
+			if (isJumping == false) {
+				rb2d.AddForce (new Vector2 (0, jumpForce));
+				animator.SetTrigger ("Jump");
+				isJumping = true;
+			}
+
 		}
 		if (Input.GetKeyDown (KeyCode.C)) 
 		{	
@@ -118,7 +127,18 @@ public class PlayerController : MonoBehaviour
 		}
 
 		if (other.tag == "Trap") {
+			rb2d.AddForce (new Vector2 (0f , 1000f));
 			loseHP ();
+		}
+
+		if (other.tag == "Health_pickup") {
+			if (HP != 10) {
+				if (HP + 2 > 10)
+					HP = 10;
+				else
+					HP += 2;
+				other.gameObject.SetActive (false);
+			}
 		}
 		 
 
