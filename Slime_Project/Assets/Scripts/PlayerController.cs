@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 			} else {
 				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+				isJumping = true;
 				loseHP ();
 			}
 		}
