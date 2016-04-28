@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 	private bool isJumping = false;
 
 	public AudioClip jumpSound;
+	public AudioClip GetHpSound;
 
 	void Start () 
 	{
@@ -129,8 +130,9 @@ public class PlayerController : MonoBehaviour
 			loseHP ();
 		}
 
-		if (other.tag == "Health_pickup") {
+		if (other.tag == "Health_pickup") {			
 			if (HP != 10) {
+				SoundManager.instance.PlaySingle (GetHpSound);
 				if (HP + 2 > 10)
 					HP = 10;
 				else
