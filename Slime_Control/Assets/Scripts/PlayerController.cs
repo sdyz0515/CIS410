@@ -8,14 +8,28 @@ public class PlayerController : MonoBehaviour
 	public Transform groundCheck;
 	public LayerMask whatIsGround;
 	public float jumpForce = 200f;
+	public int HP =1;
+	public float invincible_time  = 1f;
+	public SpriteRenderer renderer;
+	public int eatingCD = 0;
 
 	private bool facingRight = true;
 	private bool grounded = false;
 	private Rigidbody2D rb2d;
 	private float groundRadius = 0.2f;
+	private int invincible = 1;
+	private int direction = 1;
+	private bool eating = false;
+	private Animator animator;
+
+
+
+
+
 
 	void Start () 
 	{
+		animator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D> ();	
 	}
 
@@ -27,11 +41,14 @@ public class PlayerController : MonoBehaviour
 		Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
 		rb2d.velocity = movement;
 
-		if (move > 0 && !facingRight)
+		if (move > 0 && !facingRight) {
+			direction = -1;
 			Flip ();
-		else if (move < 0 && facingRight)
+		} 
+		else if (move < 0 && facingRight) {
+			direction = 1;
 			Flip ();
-
+		}
 	}
 
 	void Update () 
@@ -39,8 +56,47 @@ public class PlayerController : MonoBehaviour
 		if (grounded && Input.GetKeyDown (KeyCode.Space)) 
 		{
 			rb2d.AddForce (new Vector2 (0, jumpForce));
+			animator.SetTrigger ("Jump");
+		}
+		if (Input.GetKeyDown (KeyCode.C)) 
+		{	
+			if (eating == false && eatingCD == 0) {
+				EatingMode (true);
+				Invoke ("CancelEatingMode", 3);
+
+			}
+		}
+		if (eatingCD > 0)
+			eatingCD--;
+	}
+	void loseHP()
+	{
+		if (HP > 0 && invincible != 0) {
+			HP--;
+			invincible = 1;
+			EatingMode (false);
 		}
 	}
+
+	void EatingMode(bool status)
+	{
+		if (status) {
+			animator.SetTrigger ("Eating");
+			eatingCD = 300;
+			renderer.color = Color.red;
+			eating = true;
+
+		} else {
+			renderer.color = Color.white;
+			eating = false;
+		}
+	}
+
+	void CancelEatingMode(){
+		renderer.color = Color.white;
+		eating = false;
+	}
+
 
 	void Flip () 
 	{
@@ -48,5 +104,23 @@ public class PlayerController : MonoBehaviour
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
+	}
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (other.tag == "Enemy") {
+			if (eating) {
+				other.gameObject.SetActive (false);
+				EatingMode (false);
+			} else {
+				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+				loseHP ();
+			}
+		}
+
+		if (other.tag == "Trap") {
+			loseHP ();
+		}
+		 
+
 	}
 }

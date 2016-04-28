@@ -1,0 +1,23 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2008
+
+Project("{044C576B-B08C-724D-4A1D-E16B4D3E65C5}") = "Slime_Control", "Assembly-CSharp.csproj", "{D69CBDCD-117B-C3AC-1FD2-7132E13D78CC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D69CBDCD-117B-C3AC-1FD2-7132E13D78CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D69CBDCD-117B-C3AC-1FD2-7132E13D78CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D69CBDCD-117B-C3AC-1FD2-7132E13D78CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D69CBDCD-117B-C3AC-1FD2-7132E13D78CC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
