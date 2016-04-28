@@ -24,7 +24,10 @@ public class PlayerController : MonoBehaviour
 	private bool isJumping = false;
 
 	public AudioClip jumpSound;
-	public AudioClip GetHpSound;
+	public AudioClip getHpSound;
+	public AudioClip eatingModeSound;
+	public AudioClip eatEnemySound;
+	public AudioClip hitSound;
 
 	void Start () 
 	{
@@ -70,6 +73,7 @@ public class PlayerController : MonoBehaviour
 		{	
 			if (eating == false && eatingCD == 0) {
 				EatingMode (true);
+				SoundManager.instance.PlaySingle (eatingModeSound);
 				Invoke ("CancelEatingMode", 3);
 
 			}
@@ -81,6 +85,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (HP > 0 && invincible != 0) {
 			HP--;
+			SoundManager.instance.PlaySingle (hitSound);
 			invincible = 1;
 			EatingMode (false);
 		}
@@ -117,6 +122,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (other.tag == "Enemy") {
 			if (eating) {
+				SoundManager.instance.PlaySingle (eatEnemySound);
 				other.gameObject.SetActive (false);
 				EatingMode (false);
 			} else {
@@ -133,7 +139,7 @@ public class PlayerController : MonoBehaviour
 
 		if (other.tag == "Health_pickup") {			
 			if (HP != 10) {
-				SoundManager.instance.PlaySingle (GetHpSound);
+				SoundManager.instance.PlaySingle (getHpSound);
 				if (HP + 2 > 10)
 					HP = 10;
 				else

@@ -13,10 +13,8 @@ public abstract class Enemy : MonoBehaviour {
 		Vector2 end = start + new Vector2 (xDir, yDir);
 
 		StartCoroutine (SmoothMovement (end));
-
 	
 	}
-
 
 	protected virtual void Start() 
 	{

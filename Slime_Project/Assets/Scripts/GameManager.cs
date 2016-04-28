@@ -14,9 +14,7 @@ public class GameManager : MonoBehaviour {
 	public Text EatingText;
 	public Text HPText;
 
-
-
-
+	public AudioClip gameOverSound;
 
 	void Awake()
 	{  
@@ -43,6 +41,7 @@ public class GameManager : MonoBehaviour {
 
 	public void GameOver()
 	{	
+		SoundManager.instance.PlaySingle (gameOverSound);
 		gameOverText.text = "Game Over";
 		enabled = false;
 	}
