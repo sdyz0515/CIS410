@@ -23,10 +23,7 @@ public class PlayerController : MonoBehaviour
 	private Animator animator;
 	private bool isJumping = false;
 
-
-
-
-
+	public AudioClip jumpSound;
 
 	void Start () 
 	{
@@ -63,6 +60,7 @@ public class PlayerController : MonoBehaviour
 			if (isJumping == false) {
 				rb2d.AddForce (new Vector2 (0, jumpForce));
 				animator.SetTrigger ("Jump");
+				SoundManager.instance.PlaySingle (jumpSound);
 				isJumping = true;
 			}
 
