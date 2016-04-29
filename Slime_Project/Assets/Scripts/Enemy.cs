@@ -2,11 +2,14 @@
 using System.Collections;
 
 public abstract class Enemy : MonoBehaviour {
-
+	public GameObject dead;
+	public GameObject hit;
+	public AudioClip enemyHitSound;
+	public float inverseMoveTime = 2 ;
 
 	private CircleCollider2D circleCollider;
 	private Rigidbody2D rb2d;
-	public float inverseMoveTime = 2 ;
+
 	protected void Move(int xDir, int yDir)
 	{
 		Vector2 start = transform.position;
@@ -34,10 +37,5 @@ public abstract class Enemy : MonoBehaviour {
 			sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 			yield return null;
 		}
-	}
-
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		
 	}
 }

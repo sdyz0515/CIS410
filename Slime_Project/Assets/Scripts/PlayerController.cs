@@ -12,8 +12,9 @@ public class PlayerController : MonoBehaviour
 	public float invincible_time  = 1f;
 	public SpriteRenderer renderer;
 	public int eatingCD = 0;
+	public static bool facingRight = true;
+	public GameObject hurtParticle;
 
-	private bool facingRight = true;
 	private bool grounded = false;
 	private Rigidbody2D rb2d;
 	private float groundRadius = 0.2f;
@@ -22,6 +23,7 @@ public class PlayerController : MonoBehaviour
 	private bool eating = false;
 	private Animator animator;
 	private bool isJumping = false;
+	private bool isAte = false;
 
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
@@ -54,6 +56,8 @@ public class PlayerController : MonoBehaviour
 
 	void Update () 
 	{   
+		if (isAte)
+			Weapon.fireMode = 1;
 
 		if (grounded) {
 			isJumping = false;
@@ -84,10 +88,12 @@ public class PlayerController : MonoBehaviour
 	void loseHP()
 	{
 		if (HP > 0 && invincible != 0) {
+			GameObject hurt = Instantiate (hurtParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 			HP--;
 			SoundManager.instance.PlaySingle (hitSound);
 			invincible = 1;
 			EatingMode (false);
+			Destroy (hurt, 1);
 		}
 	}
 
@@ -124,6 +130,7 @@ public class PlayerController : MonoBehaviour
 			if (eating) {
 				SoundManager.instance.PlaySingle (eatEnemySound);
 				other.gameObject.SetActive (false);
+				isAte = true;
 				EatingMode (false);
 			} else {
 				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
@@ -147,7 +154,11 @@ public class PlayerController : MonoBehaviour
 				other.gameObject.SetActive (false);
 			}
 		}
-		 
+	}
 
+	IEnumerator Hurt() {
+		GameObject hurt = Instantiate(hurtParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
+		yield return new WaitForSeconds(1.0f);
+		Destroy (hurt);
 	}
 }
