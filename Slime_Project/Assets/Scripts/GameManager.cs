@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
@@ -13,12 +14,17 @@ public class GameManager : MonoBehaviour {
 	public Text gameOverText;
 	public Text EatingText;
 	public Text HPText;
-
+	public Button r_button;
 	public AudioClip gameOverSound;
 
+	private bool restart = false;
+
+	void Start () {
+		
+	}
 	void Awake()
 	{  
-		
+		r_button.gameObject.SetActive (false);
 		if (instance == null)
 			instance = this;
 		else if (instance != this)
@@ -44,6 +50,8 @@ public class GameManager : MonoBehaviour {
 		SoundManager.instance.PlaySingle (gameOverSound);
 		gameOverText.text = "Game Over";
 		enabled = false;
+		r_button.gameObject.SetActive (true);
+		restart = true;
 	}
 
 
@@ -53,11 +61,6 @@ public class GameManager : MonoBehaviour {
 	}
 
 
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 	
 	// Update is called once per frame
 	void Update () {
