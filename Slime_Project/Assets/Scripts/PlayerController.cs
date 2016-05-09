@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour
 			Destroy (hurt, 1);
 		}
 	}
+		
 
 	void EatingMode(bool status)
 	{
@@ -154,6 +155,16 @@ public class PlayerController : MonoBehaviour
 				other.gameObject.SetActive (false);
 			}
 		}
+
+		if (other.tag == "Exit") {
+			Restart ();
+		}
+	}
+
+	private void Restart()
+	{
+		Application.LoadLevel ("level_1");
+
 	}
 
 	IEnumerator Hurt() {
