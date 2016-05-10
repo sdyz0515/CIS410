@@ -17,6 +17,11 @@ public class Move : MonoBehaviour
 		else
 			x_direction = -1;
 		rd2d = GetComponent<Rigidbody2D> ();
+
+		Vector3 theScale = transform.localScale;
+		theScale.x *= x_direction;
+		transform.localScale = theScale;
+
 		Vector2 movement = new Vector2 (x_direction * speed, rd2d.velocity.y);
 		rd2d.velocity = movement;
 	}

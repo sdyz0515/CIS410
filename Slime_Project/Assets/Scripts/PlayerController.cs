@@ -70,6 +70,7 @@ public class PlayerController : MonoBehaviour
 				animator.SetTrigger ("Jump");
 				SoundManager.instance.PlaySingle (jumpSound);
 				isJumping = true;
+				print ("isJumping");
 			}
 
 		}
@@ -96,7 +97,6 @@ public class PlayerController : MonoBehaviour
 			Destroy (hurt, 1);
 		}
 	}
-		
 
 	void EatingMode(bool status)
 	{
@@ -125,12 +125,13 @@ public class PlayerController : MonoBehaviour
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}
+
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.tag == "Enemy") {
 			if (eating) {
 				SoundManager.instance.PlaySingle (eatEnemySound);
-				other.gameObject.SetActive (false);
+				Destroy (other.gameObject);
 				isAte = true;
 				EatingMode (false);
 			} else {
@@ -138,6 +139,14 @@ public class PlayerController : MonoBehaviour
 				isJumping = true;
 				loseHP ();
 			}
+		}
+
+		if (other.tag == "Enemy_Bolt") 
+		{
+			Destroy (other.gameObject);
+			rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+			isJumping = true;
+			loseHP ();
 		}
 
 		if (other.tag == "Trap") {
@@ -160,6 +169,7 @@ public class PlayerController : MonoBehaviour
 			Restart ();
 		}
 	}
+
 
 	private void Restart()
 	{

@@ -13,7 +13,6 @@ public class HurtByContact : MonoBehaviour {
 	{
 		if (other.tag == "Enemy")
 		{
-			print ("hahahah");
 			Instantiate(hurtParticle, gameObject.transform.position, gameObject.transform.rotation);
 		}
 	}

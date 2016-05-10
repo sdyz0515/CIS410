@@ -5,8 +5,9 @@ public abstract class Enemy : MonoBehaviour {
 	public GameObject dead;
 	public GameObject hit;
 	public AudioClip enemyHitSound;
-	public float inverseMoveTime = 2 ;
+	public float inverseMoveTime = 2;
 
+	protected GameObject player;
 	private CircleCollider2D circleCollider;
 	private Rigidbody2D rb2d;
 
@@ -20,10 +21,10 @@ public abstract class Enemy : MonoBehaviour {
 	}
 
 	protected virtual void Start() 
-	{
+	{	
 		circleCollider = GetComponent<CircleCollider2D> ();
 		rb2d = GetComponent<Rigidbody2D> ();
-	
+		player = GameObject.FindWithTag ("Player");
 	}
 
 	protected IEnumerator SmoothMovement (Vector3 end)

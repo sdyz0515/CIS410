@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
 		enemies = new List<Enemy> ();
 		for (int i = 0; i < enemy_num; i++) {
 			Enemy enemy = enemyTiles [Random.Range (0, enemyTiles.Length)];
-			Instantiate (enemy,new Vector3(4.87f,-0.48f,0.00f),Quaternion.identity);
+			//Instantiate (enemy,new Vector3(4.87f,-0.48f,0.00f),Quaternion.identity);
 
 		}
 		InitGame ();

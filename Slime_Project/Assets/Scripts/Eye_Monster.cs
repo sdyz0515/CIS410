@@ -5,7 +5,7 @@ public class Eye_Monster : Enemy {
 
 	private Transform target;
 	private int Hp = 2;
-
+	private bool facingRight = true;
 
 	// Use this for initialization
 	protected override void Start () {
@@ -13,9 +13,24 @@ public class Eye_Monster : Enemy {
 		base.Start ();
 	}
 		
+	void Flip () 
+	{
+		facingRight = !facingRight;
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+	}
+
 	void FixedUpdate () {
 		int x = 0;
 		int y = 0;
+
+		float offset = player.transform.position.x - transform.position.x;
+
+		if (offset > 0 && !facingRight) 
+			Flip ();
+		else if (offset < 0 && facingRight)
+			Flip ();
 
 		if (Mathf.Abs (target.position.x - transform.position.x) < float.Epsilon)
 			y = target.position.y > transform.position.y ? 1 : -1;
@@ -26,7 +41,7 @@ public class Eye_Monster : Enemy {
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.CompareTag ("Bolt")) 
+		if (other.CompareTag ("Bolt") || other.CompareTag ("Fire_Bolt")) 
 		{
 			Hp--;
 			Destroy (other.gameObject);
