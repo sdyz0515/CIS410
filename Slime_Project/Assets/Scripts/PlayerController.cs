@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
 	private void Restart()
 	{
 		Application.LoadLevel ("level_1");
-
+		SoundManager.instance.PlayNextBGM (1); // need change with load level
 	}
 
 	IEnumerator Hurt() {

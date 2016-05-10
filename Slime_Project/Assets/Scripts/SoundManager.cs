@@ -4,15 +4,22 @@ using System.Collections;
 public class SoundManager : MonoBehaviour {
 
 	public AudioSource efxSource;
-	public AudioSource musicSource;
+	//public AudioSource musicSource;
+	//public AudioSource musicSource1;
+	//public AudioSource musicSource2;
+	//public AudioSource musicSource3;
+	//public AudioSource musicSource4;
+	public AudioSource[] BGMList;
 	public static SoundManager instance = null;
 
 	public float lowPitchRange = 0.95f;
 	public float highPitchRange = 1.05f;
 
 	void Awake () {
-		if (instance == null)
+		if (instance == null){
 			instance = this;
+			//BGMList= [musicSource,musicSource1,musicSource2,musicSource3,musicSource4];
+		}
 		else if (instance != this)
 			Destroy (gameObject);
 
@@ -36,5 +43,10 @@ public class SoundManager : MonoBehaviour {
 		efxSource.pitch = randomPitch;
 		efxSource.clip = clips [randomIndex];
 		efxSource.Play ();
+	}
+
+	public void PlayNextBGM (int level){
+		BGMList[level-1].Stop ();
+		BGMList[level].Play ();
 	}
 }
