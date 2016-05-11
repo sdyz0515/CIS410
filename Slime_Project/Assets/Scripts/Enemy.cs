@@ -5,13 +5,14 @@ public abstract class Enemy : MonoBehaviour {
 	public GameObject dead;
 	public GameObject hit;
 	public AudioClip enemyHitSound;
-	public float inverseMoveTime = 2;
+	public static float inverseMoveTime = 2.0f;
+	public static int bolt_num;
 
 	protected GameObject player;
 	private CircleCollider2D circleCollider;
 	private Rigidbody2D rb2d;
 
-	protected void Move(int xDir, int yDir)
+	protected void Move(float xDir, float yDir)
 	{
 		Vector2 start = transform.position;
 		Vector2 end = start + new Vector2 (xDir, yDir);

@@ -4,8 +4,11 @@ using System.Collections;
 public class Eye_Monster : Enemy {
 
 	private Transform target;
-	private int Hp = 2;
+	private float Hp = 2;
 	private bool facingRight = true;
+	private string status;
+	public SpriteRenderer renderer;
+
 
 	// Use this for initialization
 	protected override void Start () {
@@ -40,22 +43,63 @@ public class Eye_Monster : Enemy {
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.CompareTag ("Bolt") || other.CompareTag ("Fire_Bolt")) 
-		{
-			Hp--;
+	{   
+		switch (other.tag) {
+
+		case "Bolt":
+			Hp-= 1.0f;
 			Destroy (other.gameObject);
 			SoundManager.instance.PlaySingle (enemyHitSound);
-			if (Hp == 0) {
+			if (Hp  <= 0.0f) {
 				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
 				Destroy (deadcopy, 1);
 				Destroy (gameObject);
-			} 
-			else 
-			{
+			} else {
 				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
 				Destroy (hitcopy, 0.5f);
 			}
+			break;
+
+
+		case "Fire_Bolt":
+			Hp-= 1.0f;
+			Destroy (other.gameObject);
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			status = "burn";
+			renderer.color = Color.red;
+			if (Hp  <= 0.0f) {
+				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
+				Destroy (deadcopy, 1);
+				Destroy (gameObject);
+			} else {
+				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
+				Destroy (hitcopy, 0.5f);
+			}
+
+			break;
+
+		case "Ice_Bolt":
+			Hp -= 0.5f;
+			Destroy (other.gameObject);
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			status = "iced";
+			renderer.color = Color.blue;
+			inverseMoveTime -= 0.5f;
+			if (inverseMoveTime <= 0.0f)
+				inverseMoveTime = 0.0f;
+			if (Hp  <= 0.0f) {
+				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
+				Destroy (deadcopy, 1);
+				Destroy (gameObject);
+			} else {
+				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
+				Destroy (hitcopy, 0.5f);
+			}
+
+			break;
+
+		default:
+			break;
 		}
 	}
 }

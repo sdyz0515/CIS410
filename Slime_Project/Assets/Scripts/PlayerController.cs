@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PlayerController : MonoBehaviour 
@@ -126,48 +126,66 @@ public class PlayerController : MonoBehaviour
 		transform.localScale = theScale;
 	}
 
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		if (other.tag == "Enemy") {
-			if (eating) {
-				SoundManager.instance.PlaySingle (eatEnemySound);
-				Destroy (other.gameObject);
-				isAte = true;
-				EatingMode (false);
-			} else {
-				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
-				isJumping = true;
-				loseHP ();
-			}
-		}
 
-		if (other.tag == "Enemy_Bolt") 
+		private void OnTriggerEnter2D(Collider2D other)
 		{
-			Destroy (other.gameObject);
-			rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
-			isJumping = true;
-			loseHP ();
-		}
+			switch (other.tag) {
 
-		if (other.tag == "Trap") {
-			rb2d.AddForce (new Vector2 (0f , 1000f));
-			loseHP ();
-		}
+				case "Dragon":
+					if (eating) {
+						SoundManager.instance.PlaySingle (eatEnemySound);
+						Destroy (other.gameObject);
+						Weapon.fireMode = 1;
+						EatingMode (false);
+					} else {
+						rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+						isJumping = true;
+						loseHP ();
+					}
+					break;
+			
+			
+				case "Eye_Monster":
+					if (eating) {
+						SoundManager.instance.PlaySingle (eatEnemySound);
+						Destroy (other.gameObject);
+						Weapon.fireMode = 2;
+						EatingMode (false);
+					} else {
+						rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+						isJumping = true;
+						loseHP ();
+					}
+					break;
 
-		if (other.tag == "Health_pickup") {			
-			if (HP != 10) {
-				SoundManager.instance.PlaySingle (getHpSound);
-				if (HP + 2 > 10)
-					HP = 10;
-				else
-					HP += 2;
-				other.gameObject.SetActive (false);
+
+				case "Enemy_Bolt":
+					Destroy (other.gameObject);
+					rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+					isJumping = true;
+					loseHP ();
+					break;
+
+				case "Trap":
+					rb2d.AddForce (new Vector2 (0f , 1000f));
+					loseHP ();
+					break;
+
+			case "Health_pickup":
+				if (HP != 10) {
+					SoundManager.instance.PlaySingle (getHpSound);
+					if (HP + 2 > 10)
+						HP = 10;
+					else
+						HP += 2;
+					other.gameObject.SetActive (false);
+				}
+				break;
+
+			case "Exit":
+				Restart ();
+				break;
 			}
-		}
-
-		if (other.tag == "Exit") {
-			Restart ();
-		}
 	}
 
 
