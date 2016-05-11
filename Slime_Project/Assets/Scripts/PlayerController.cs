@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
 	private bool isAte = false;
 	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4"};
 
+
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
 	public AudioClip eatingModeSound;
@@ -57,8 +58,6 @@ public class PlayerController : MonoBehaviour
 
 	void Update () 
 	{   
-		if (isAte)
-			Weapon.fireMode = 1;
 
 		if (grounded) {
 			isJumping = false;
@@ -71,7 +70,7 @@ public class PlayerController : MonoBehaviour
 				animator.SetTrigger ("Jump");
 				SoundManager.instance.PlaySingle (jumpSound);
 				isJumping = true;
-				print ("isJumping");
+
 			}
 
 		}
@@ -84,6 +83,13 @@ public class PlayerController : MonoBehaviour
 
 			}
 		}
+		if (Input.GetKeyDown (KeyCode.X)) 
+		{	
+			GameManager.Ability_Index = (GameManager.Ability_Index + 1) % GameManager.Ability_num;
+		}
+
+		Weapon.fireMode = GameManager.Ability_List[GameManager.Ability_Index];
+
 		if (eatingCD > 0)
 			eatingCD--;
 	}
@@ -128,15 +134,26 @@ public class PlayerController : MonoBehaviour
 	}
 
 
-		private void OnTriggerEnter2D(Collider2D other)
-		{
-			switch (other.tag) {
+	void Add_ability(int num)
+	{
+		if (GameManager.Ability_num >= 3) {
+			GameManager.Ability_List [0] = num;
+		}
+		else
+			GameManager.Ability_List [GameManager.Ability_num] = num;
+		GameManager.Ability_num++;
+	}
+
+
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		switch (other.tag) {
 
 				case "Dragon":
 					if (eating) {
 						SoundManager.instance.PlaySingle (eatEnemySound);
 						Destroy (other.gameObject);
-						Weapon.fireMode = 1;
+						Add_ability (1);
 						EatingMode (false);
 					} else {
 						rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
@@ -150,7 +167,7 @@ public class PlayerController : MonoBehaviour
 					if (eating) {
 						SoundManager.instance.PlaySingle (eatEnemySound);
 						Destroy (other.gameObject);
-						Weapon.fireMode = 2;
+						Add_ability (2);
 						EatingMode (false);
 					} else {
 						rb2d.AddForce (new Vector2 (direction * 10000f, 300f));

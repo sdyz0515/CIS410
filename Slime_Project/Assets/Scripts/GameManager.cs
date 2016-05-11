@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour {
 	public Button r_button;
 	public AudioClip gameOverSound;
 	public static int level = 0;
+	public static int[] Ability_List = {0,0,0};
+	public static int Ability_Index = 0;
+	public static int Ability_num = 1;
 
 	private bool restart = false;
 
