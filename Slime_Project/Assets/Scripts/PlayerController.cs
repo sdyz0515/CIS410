@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 	private bool isJumping = false;
 	private bool isAte = false;
 	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4"};
-
+	private bool ifdead = false;
 
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
@@ -37,22 +37,24 @@ public class PlayerController : MonoBehaviour
 	{
 		animator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D> ();	
+		ifdead = false;
 	}
 
 	void FixedUpdate () 
-	{
-		grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
-		float move = Input.GetAxis ("Horizontal");
-		Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
-		rb2d.velocity = movement;
+	{	if (!ifdead) {
+			grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
+			float move = Input.GetAxis ("Horizontal");
+			Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
+			rb2d.velocity = movement;
 
-		if (move > 0 && !facingRight) {
-			direction = -1;
-			Flip ();
-		} 
-		else if (move < 0 && facingRight) {
-			direction = 1;
-			Flip ();
+			if (move > 0 && !facingRight) {
+				direction = -1;
+				Flip ();
+			} 
+			else if (move < 0 && facingRight) {
+				direction = 1;
+				Flip ();
+			}
 		}
 	}
 
@@ -63,7 +65,7 @@ public class PlayerController : MonoBehaviour
 			isJumping = false;
 		}
 
-		if (grounded && Input.GetKeyDown (KeyCode.Space)) 
+		if (grounded && Input.GetKeyDown (KeyCode.Space) && !ifdead) 
 		{   
 			if (isJumping == false) {
 				rb2d.AddForce (new Vector2 (0, jumpForce));
@@ -149,61 +151,71 @@ public class PlayerController : MonoBehaviour
 	{
 		switch (other.tag) {
 
-				case "Dragon":
-					if (eating) {
-						SoundManager.instance.PlaySingle (eatEnemySound);
-						Destroy (other.gameObject);
-						Add_ability (1);
-						EatingMode (false);
-					} else {
-						rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
-						isJumping = true;
-						loseHP ();
-					}
-					break;
-			
-			
-				case "Eye_Monster":
-					if (eating) {
-						SoundManager.instance.PlaySingle (eatEnemySound);
-						Destroy (other.gameObject);
-						Add_ability (2);
-						EatingMode (false);
-					} else {
-						rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
-						isJumping = true;
-						loseHP ();
-					}
-					break;
-
-
-				case "Enemy_Bolt":
-					Destroy (other.gameObject);
-					rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
-					isJumping = true;
-					loseHP ();
-					break;
-
-				case "Trap":
-					rb2d.AddForce (new Vector2 (0f , 1000f));
-					loseHP ();
-					break;
-
-			case "Health_pickup":
-				if (HP != 10) {
-					SoundManager.instance.PlaySingle (getHpSound);
-					if (HP + 2 > 10)
-						HP = 10;
-					else
-						HP += 2;
-					other.gameObject.SetActive (false);
-				}
-				break;
-
-			case "Exit":
-				Restart ();
-				break;
+		case "Dragon":
+			if (eating) {
+				SoundManager.instance.PlaySingle (eatEnemySound);
+				Destroy (other.gameObject);
+				Add_ability (1);
+				EatingMode (false);
+			} else {
+				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+				isJumping = true;
+				loseHP ();
 			}
+			break;
+		
+		
+		case "Eye_Monster":
+			if (eating) {
+				SoundManager.instance.PlaySingle (eatEnemySound);
+				Destroy (other.gameObject);
+				Add_ability (2);
+				EatingMode (false);
+			} else {
+				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+				isJumping = true;
+				loseHP ();
+			}
+			break;
+
+
+		case "Enemy_Bolt":
+			Destroy (other.gameObject);
+			rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+			isJumping = true;
+			loseHP ();
+			break;
+
+		case "Trap":
+			rb2d.AddForce (new Vector2 (0f, 1000f));
+			loseHP ();
+			break;
+
+		case "Health_pickup":
+			if (HP != 10) {
+				SoundManager.instance.PlaySingle (getHpSound);
+				if (HP + 2 > 10)
+					HP = 10;
+				else
+					HP += 2;
+				other.gameObject.SetActive (false);
+			}
+			break;
+
+		case "Exit":
+			Restart ();
+			break;
+
+		case "Lava": 
+			Renderer render = GetComponent<Renderer> ();
+			render.enabled = false;
+			ifdead = true;
+			break;
+
+		default:
+			break;
+		}
+
 	}
 
 
