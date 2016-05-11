@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
 	private Animator animator;
 	private bool isJumping = false;
 	private bool isAte = false;
+	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4"};
 
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
@@ -190,9 +191,10 @@ public class PlayerController : MonoBehaviour
 
 
 	private void Restart()
-	{
-		Application.LoadLevel ("level_1");
-		SoundManager.instance.PlayNextBGM (1); // need change with load level
+	{	
+		GameManager.level++;
+		Application.LoadLevel (Level_list[GameManager.level]);
+		SoundManager.instance.PlayNextBGM (GameManager.level); // need change with load level
 	}
 
 	IEnumerator Hurt() {

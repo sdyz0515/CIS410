@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
 	public Text HPText;
 	public Button r_button;
 	public AudioClip gameOverSound;
+	public static int level = 0;
 
 	private bool restart = false;
 
