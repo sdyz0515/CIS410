@@ -222,6 +222,7 @@ public class PlayerController : MonoBehaviour
 	private void Restart()
 	{	
 		GameManager.level++;
+		facingRight = true;
 		Application.LoadLevel (Level_list[GameManager.level]);
 		SoundManager.instance.PlayNextBGM (GameManager.level); // need change with load level
 	}
