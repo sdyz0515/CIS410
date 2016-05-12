@@ -4,11 +4,6 @@ using System.Collections;
 public class SoundManager : MonoBehaviour {
 
 	public AudioSource efxSource;
-	//public AudioSource musicSource;
-	//public AudioSource musicSource1;
-	//public AudioSource musicSource2;
-	//public AudioSource musicSource3;
-	//public AudioSource musicSource4;
 	public AudioSource[] BGMList;
 	public static SoundManager instance = null;
 
@@ -18,7 +13,6 @@ public class SoundManager : MonoBehaviour {
 	void Awake () {
 		if (instance == null){
 			instance = this;
-			//BGMList= [musicSource,musicSource1,musicSource2,musicSource3,musicSource4];
 		}
 		else if (instance != this)
 			Destroy (gameObject);
