@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
 			break;
 
 		case "Trap":
-			rb2d.AddForce (new Vector2 (0f, 1000f));
+			//rb2d.AddForce (new Vector2 (0f, 1000f));
 			loseHP ();
 			break;
 

@@ -18,6 +18,7 @@ public class Enemy_Frog : Enemy {
 	private Transform target;
 	private float Hp = 3.0f;
 	public static bool facingRight = true;
+	private bool facingRight_1 = true;
 	private string status;
 
 	protected override void Start () 
@@ -43,7 +44,7 @@ public class Enemy_Frog : Enemy {
 		
 	void Flip () 
 	{
-		facingRight = !facingRight;
+		facingRight_1 = !facingRight_1;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
@@ -54,9 +55,9 @@ public class Enemy_Frog : Enemy {
 		float x = 0.0f;
 		float offset = player.transform.position.x - transform.position.x;
 
-		if (offset > float.Epsilon && !facingRight) 
+		if (offset > float.Epsilon && !facingRight_1) 
 			Flip ();
-		else if (offset < float.Epsilon && facingRight)
+		else if (offset < float.Epsilon && facingRight_1)
 			Flip ();
 
 		if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
