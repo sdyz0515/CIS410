@@ -9,8 +9,8 @@ public abstract class Enemy : MonoBehaviour {
 	public static int bolt_num;
 
 	protected GameObject player;
-	private CircleCollider2D circleCollider;
-	private Rigidbody2D rb2d;
+	protected CircleCollider2D circleCollider;
+	protected Rigidbody2D rb2d;
 
 	protected void Move(float xDir, float yDir)
 	{
