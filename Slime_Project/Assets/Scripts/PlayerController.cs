@@ -70,8 +70,8 @@ public class PlayerController : MonoBehaviour
 			if (isJumping == false) {
 				rb2d.AddForce (new Vector2 (0, jumpForce));
 				animator.SetTrigger ("Jump");
-				SoundManager.instance.PlaySingle (jumpSound);
 				isJumping = true;
+				SoundManager.instance.PlaySingle (jumpSound);
 
 			}
 
@@ -80,8 +80,8 @@ public class PlayerController : MonoBehaviour
 		{	
 			if (eating == false && eatingCD == 0) {
 				EatingMode (true);
-				SoundManager.instance.PlaySingle (eatingModeSound);
 				Invoke ("CancelEatingMode", 3);
+				SoundManager.instance.PlaySingle (eatingModeSound);
 
 			}
 		}
@@ -100,10 +100,10 @@ public class PlayerController : MonoBehaviour
 		if (HP > 0 && invincible != 0) {
 			GameObject hurt = Instantiate (hurtParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 			HP--;
-			SoundManager.instance.PlaySingle (hitSound);
 			invincible = 1;
 			EatingMode (false);
 			Destroy (hurt, 1);
+			SoundManager.instance.PlaySingle (hitSound);
 		}
 	}
 
@@ -153,10 +153,10 @@ public class PlayerController : MonoBehaviour
 
 		case "Dragon":
 			if (eating) {
-				SoundManager.instance.PlaySingle (eatEnemySound);
 				Destroy (other.gameObject);
 				Add_ability (1);
 				EatingMode (false);
+				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
 				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
 				isJumping = true;
@@ -167,10 +167,10 @@ public class PlayerController : MonoBehaviour
 		
 		case "Eye_Monster":
 			if (eating) {
-				SoundManager.instance.PlaySingle (eatEnemySound);
 				Destroy (other.gameObject);
 				Add_ability (2);
 				EatingMode (false);
+				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
 				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
 				isJumping = true;
@@ -193,12 +193,13 @@ public class PlayerController : MonoBehaviour
 
 		case "Health_pickup":
 			if (HP != 10) {
-				SoundManager.instance.PlaySingle (getHpSound);
+				
 				if (HP + 2 > 10)
 					HP = 10;
 				else
 					HP += 2;
 				other.gameObject.SetActive (false);
+				SoundManager.instance.PlaySingle (getHpSound);
 			}
 			break;
 

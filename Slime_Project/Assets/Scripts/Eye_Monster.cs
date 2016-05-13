@@ -4,10 +4,11 @@ using System.Collections;
 public class Eye_Monster : Enemy {
 
 	private Transform target;
-	private float Hp = 2;
+	private float Hp = 2.0f;
 	private bool facingRight = true;
 	private string status;
 	public SpriteRenderer renderer;
+
 
 
 	// Use this for initialization
@@ -35,10 +36,12 @@ public class Eye_Monster : Enemy {
 		else if (offset < 0 && facingRight)
 			Flip ();
 
-		if (Mathf.Abs (target.position.x - transform.position.x) < float.Epsilon)
-			y = target.position.y > transform.position.y ? 1 : -1;
-		else
+		if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
 			x = target.position.x > transform.position.x ? 1 : -1;
+
+		if (Mathf.Abs (target.position.y - transform.position.y) > float.Epsilon)
+			y = target.position.y > transform.position.y ? 1 : -1;
+
 		Move (x, y);
 	}
 

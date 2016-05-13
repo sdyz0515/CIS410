@@ -6,6 +6,7 @@ public class Dragon_Enemy : Enemy {
 	private Transform target;
 	private float Hp = 3.0f;
 	public static bool facingRight = true;
+	private bool faceright = true;
 	private string status;
 	public SpriteRenderer renderer;
 
@@ -17,7 +18,7 @@ public class Dragon_Enemy : Enemy {
 
 	void Flip () 
 	{
-		facingRight = !facingRight;
+		faceright = !faceright;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
@@ -27,9 +28,9 @@ public class Dragon_Enemy : Enemy {
 		float x = 0.0f;
 		float offset = player.transform.position.x - transform.position.x;
 
-		if (offset > float.Epsilon && !facingRight) 
+		if (offset > float.Epsilon && !faceright) 
 			Flip ();
-		else if (offset < float.Epsilon && facingRight)
+		else if (offset < float.Epsilon && faceright)
 			Flip ();
 		
 		if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
@@ -51,7 +52,7 @@ public class Dragon_Enemy : Enemy {
 			break;
 		}
 
-
+		facingRight = faceright;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
