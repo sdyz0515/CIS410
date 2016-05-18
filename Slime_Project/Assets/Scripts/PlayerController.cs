@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 	public int eatingCD = 0;
 	public static bool facingRight = true;
 	public GameObject hurtParticle;
-	//public GameObject bubble;
+	public GameObject bubble;
 
 	private bool grounded = false;
 	private Rigidbody2D rb2d;
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 	private int direction = 1;
 	private bool eating = false;
 	private Animator animator;
+	private Animator bubble_animator;
 	private bool isJumping = false;
 	private bool isAte = false;
 	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4"};
@@ -72,12 +73,14 @@ public class PlayerController : MonoBehaviour
 				rb2d.AddForce (new Vector2 (0, jumpForce));
 				animator.SetTrigger ("Jump");
 				isJumping = true;
+
 				SoundManager.instance.PlaySingle (jumpSound);
-				/*
+
 				if (GameManager.level == 3) {
-					Animator bubble_animator = bubble.GetComponent("Animator") as Animator;
-					bubble_animator.Play ("Bubble");
-				}*/
+					bubble.transform.position = GetComponent<Transform>().position;
+					bubble_animator = bubble.GetComponent<Animator> ();
+					bubble_animator.SetTrigger ("Release");
+				}
 			}
 
 		}
