@@ -40,7 +40,11 @@ public class SoundManager : MonoBehaviour {
 	}
 
 	public void PlayNextBGM (int level){
-		BGMList[level-1].Stop ();
-		BGMList[level].Play ();
+		if (level == 0) {
+			BGMList [level].Play ();
+		} else {
+			BGMList[level-1].Stop ();
+			BGMList[level].Play ();
+		}
 	}
 }
