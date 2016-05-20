@@ -24,7 +24,7 @@ public class Weapon : MonoBehaviour {
 	IEnumerator Shoot() 
 	{	
 		GameObject shoot = Instantiate (shots[fireMode], transform.position, transform.rotation) as GameObject;
-		yield return new WaitForSeconds (2);
+		yield return new WaitForSeconds (1);
 		if (shoot != null)
 			Destroy (shoot);
 	}
