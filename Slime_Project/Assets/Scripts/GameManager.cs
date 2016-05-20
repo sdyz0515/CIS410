@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		HPText.text = "HP: "+ player.HP;
-		EatingText.text = "Eating CD: " + player.eatingCD;
+		EatingText.text = "Eating CD: ";
 		if (player.HP == 0)
 			GameOver ();
 		

@@ -37,14 +37,7 @@ public class Jellyfish : Enemy {
 			Hp-= 1.0f;
 			Destroy (other.gameObject);
 			SoundManager.instance.PlaySingle (enemyHitSound);
-			if (Hp  <= 0.0f) {
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				Destroy (gameObject);
-			} else {
-				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
-				Destroy (hitcopy, 0.5f);
-			}
+			Death (Hp,gameObject);
 			break;
 
 
@@ -54,14 +47,7 @@ public class Jellyfish : Enemy {
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			status = "burn";
 			renderer.color = Color.red;
-			if (Hp  <= 0.0f) {
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				Destroy (gameObject);
-			} else {
-				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
-				Destroy (hitcopy, 0.5f);
-			}
+			Death (Hp,gameObject);
 
 			break;
 
@@ -74,28 +60,14 @@ public class Jellyfish : Enemy {
 			inverseMoveTime -= 0.5f;
 			if (inverseMoveTime <= 0.0f)
 				inverseMoveTime = 0.0f;
-			if (Hp  <= 0.0f) {
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				Destroy (gameObject);
-			} else {
-				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
-				Destroy (hitcopy, 0.5f);
-			}
+			Death (Hp,gameObject);
 
 			break;
 
 		case "Electric_Shield":
 			Hp-= 0.5f;
 			SoundManager.instance.PlaySingle (enemyHitSound);
-			if (Hp  <= 0.0f) {
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				Destroy (gameObject);
-			} else {
-				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
-				Destroy (hitcopy, 0.5f);
-			}
+			Death (Hp,gameObject);
 			break;
 
 		default:

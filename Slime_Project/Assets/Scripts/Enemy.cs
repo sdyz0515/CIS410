@@ -40,4 +40,17 @@ public abstract class Enemy : MonoBehaviour {
 			yield return null;
 		}
 	}
+
+	public void Death(float hp, GameObject obj){
+		if (hp <= 0){
+			GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
+			Destroy (deadcopy, 1);
+			Destroy (obj);
+			PlayerController.energy += 2;
+		}
+		else{
+			GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
+			Destroy (hitcopy, 0.5f);
+		}
+	}
 }

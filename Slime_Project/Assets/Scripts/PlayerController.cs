@@ -13,10 +13,11 @@ public class PlayerController : MonoBehaviour
 	public int HP =6;
 	public float invincible_time  = 1f;
 	public SpriteRenderer renderer;
-	public int eatingCD = 0;
+	//public int eatingCD = 0;
 	public static bool facingRight = true;
 	public GameObject hurtParticle;
 	public GameObject bubble;
+	public static int energy = 0;
 
 	private bool grounded = false;
 	private bool wallTouch = false;
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.C)) 
 		{	
-			if (eating == false && eatingCD == 0) {
+			if (eating == false && energy == 6) {
 				EatingMode (true);
 				Invoke ("CancelEatingMode", 3);
 				SoundManager.instance.PlaySingle (eatingModeSound);
@@ -108,8 +109,6 @@ public class PlayerController : MonoBehaviour
 
 		Weapon.fireMode = GameManager.Ability_List[GameManager.Ability_Index];
 
-		if (eatingCD > 0)
-			eatingCD--;
 	}
 	void loseHP()
 	{
@@ -127,7 +126,7 @@ public class PlayerController : MonoBehaviour
 	{
 		if (status) {
 			animator.SetTrigger ("Eating");
-			eatingCD = 300;
+			energy = 0;
 			renderer.color = Color.red;
 			eating = true;
 
