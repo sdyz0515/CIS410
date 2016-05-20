@@ -62,12 +62,13 @@ public class Skele_Enemy: Enemy {
 	private void OnTriggerEnter2D(Collider2D other)
 	{   
 		switch (other.tag) {
+
 		case "Bound":
 			Flip ();
 			break;
-		
+
 		case "Bolt":
-			Hp-= 1.0f;
+			Hp -= 1.0f;
 			Destroy (other.gameObject);
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			Death (Hp,gameObject);
@@ -81,6 +82,7 @@ public class Skele_Enemy: Enemy {
 			status = "burn";
 			renderer.color = Color.red;
 			Death (Hp,gameObject);
+
 			break;
 
 		case "Ice_Bolt":
@@ -93,6 +95,7 @@ public class Skele_Enemy: Enemy {
 			if (inverseMoveTime <= 0.0f)
 				inverseMoveTime = 0.0f;
 			Death (Hp,gameObject);
+
 			break;
 
 		case "Electric_Shield":
@@ -100,7 +103,7 @@ public class Skele_Enemy: Enemy {
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			Death (Hp,gameObject);
 			break;
-		
+
 		default:
 			break;
 		}

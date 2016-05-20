@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
 	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4","Level_5"};
 	private bool ifdead = false;
 	private Vector2 enemyForce;
+	private Vector2 toEnemyForce;
 
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
@@ -167,6 +168,7 @@ public class PlayerController : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		enemyForce = new Vector2 (direction * 5000f, 0f);
+		toEnemyForce = new Vector2 (-1 * direction * 5000f, 0f);
 
 		switch (other.tag) {
 
@@ -180,6 +182,8 @@ public class PlayerController : MonoBehaviour
 				rb2d.AddForce (enemyForce);
 				isJumping = true;
 				loseHP ();
+				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+				Enemy.AddForce (toEnemyForce);
 			}
 			break;
 		
@@ -194,6 +198,8 @@ public class PlayerController : MonoBehaviour
 				rb2d.AddForce (enemyForce);
 				isJumping = true;
 				loseHP ();
+				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+				Enemy.AddForce (toEnemyForce);
 			}
 			break;
 

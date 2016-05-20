@@ -11,7 +11,7 @@ public class Move_E : MonoBehaviour
 	void Start ()
 	{  	
 
-		faceright = Dragon_Enemy.facingRight;
+		faceright = Dragon_Enemy.faceright;
 		if (faceright)
 			x_direction = 1;
 		else
@@ -28,6 +28,6 @@ public class Move_E : MonoBehaviour
 
 	void Upate() 
 	{
-		faceright = Dragon_Enemy.facingRight;
+		faceright = Dragon_Enemy.faceright;
 	}
 }

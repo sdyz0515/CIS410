@@ -5,14 +5,15 @@ public class Dragon_Enemy_Green : Enemy {
 
 	private Transform target;
 	private float Hp = 3.0f;
+	public static bool faceright = true;
 	private string status;
 	public SpriteRenderer renderer;
 
-	public static bool faceright = true;
-
 	protected override void Start () {
+		faceright = true;
 		renderer.color = Color.green;
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
+		bolt_num = 1;
 		base.Start ();
 	}
 
@@ -28,15 +29,14 @@ public class Dragon_Enemy_Green : Enemy {
 		float x = 0.0f;
 		float offset = player.transform.position.x - transform.position.x;
 		if (Mathf.Abs (offset) <= 5) {
-			if (offset > float.Epsilon && !faceright)
+			if (offset > float.Epsilon && !faceright) 
 				Flip ();
 			else if (offset < float.Epsilon && faceright)
 				Flip ();
 
 			if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
-				x = target.position.x > transform.position.x ? 2 : -2;
-		}
-
+				x = target.position.x > transform.position.x ? 1 : -1;
+		} 
 		else {
 			x = faceright ? 4 : -4;
 			inverseMoveTime = 5f;
@@ -63,12 +63,13 @@ public class Dragon_Enemy_Green : Enemy {
 	private void OnTriggerEnter2D(Collider2D other)
 	{   
 		switch (other.tag) {
+
 		case "Bound":
 			Flip ();
 			break;
-		
+
 		case "Bolt":
-			Hp-= 1.0f;
+			Hp -= 1.0f;
 			Destroy (other.gameObject);
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			Death (Hp,gameObject);
@@ -95,6 +96,7 @@ public class Dragon_Enemy_Green : Enemy {
 			if (inverseMoveTime <= 0.0f)
 				inverseMoveTime = 0.0f;
 			Death (Hp,gameObject);
+
 			break;
 
 		case "Electric_Shield":
@@ -102,11 +104,14 @@ public class Dragon_Enemy_Green : Enemy {
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			Death (Hp,gameObject);
 			break;
-		
+
 		default:
 			break;
 		}
 	}
+
+
+
 }
 
 

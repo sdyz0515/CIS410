@@ -46,7 +46,7 @@ public abstract class Enemy : MonoBehaviour {
 			GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
 			Destroy (deadcopy, 1);
 			Destroy (obj);
-			PlayerController.energy += 2;
+			PlayerController.energy += 3;
 		}
 		else{
 			GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;

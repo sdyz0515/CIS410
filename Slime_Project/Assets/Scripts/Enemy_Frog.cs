@@ -17,7 +17,6 @@ public class Enemy_Frog : Enemy {
 
 	private Transform target;
 	private float Hp = 3.0f;
-	public static bool facingRight = true;
 	private bool facingRight_1 = true;
 	private string status;
 
@@ -54,14 +53,19 @@ public class Enemy_Frog : Enemy {
 		
 		float x = 0.0f;
 		float offset = player.transform.position.x - transform.position.x;
+		if (Mathf.Abs (offset) <= 5) {
+			if (offset > float.Epsilon && !facingRight_1)
+				Flip ();
+			else if (offset < float.Epsilon && facingRight_1)
+				Flip ();
 
-		if (offset > float.Epsilon && !facingRight_1) 
-			Flip ();
-		else if (offset < float.Epsilon && facingRight_1)
-			Flip ();
-
-		if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
-			x = target.position.x > transform.position.x ? 30f : -30f;
+			if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
+				x = target.position.x > transform.position.x ? 30f : -30f;
+		} 
+		else {
+			x = facingRight_1 ? 40f : -40f;
+		}
+			
 		if( Time.time > nextJump) 
 		{
 			nextJump = Time.time + JumpRate;
@@ -88,6 +92,9 @@ public class Enemy_Frog : Enemy {
 	private void OnTriggerEnter2D(Collider2D other)
 	{   
 		switch (other.tag) {
+		case "Bound":
+			Flip ();
+			break;
 
 		case "Bolt":
 			Hp-= 1.0f;

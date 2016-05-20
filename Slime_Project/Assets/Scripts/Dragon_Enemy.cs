@@ -5,12 +5,12 @@ public class Dragon_Enemy : Enemy {
 
 	private Transform target;
 	private float Hp = 3.0f;
-	public static bool facingRight = true;
-	private bool faceright = true;
+	public static bool faceright = true;
 	private string status;
 	public SpriteRenderer renderer;
 
 	protected override void Start () {
+		faceright = true;
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		bolt_num = 1;
 		base.Start ();
@@ -27,14 +27,20 @@ public class Dragon_Enemy : Enemy {
 	void FixedUpdate () {
 		float x = 0.0f;
 		float offset = player.transform.position.x - transform.position.x;
+		if (Mathf.Abs (offset) <= 5) {
+			if (offset > float.Epsilon && !faceright) 
+				Flip ();
+			else if (offset < float.Epsilon && faceright)
+				Flip ();
 
-		if (offset > float.Epsilon && !faceright) 
-			Flip ();
-		else if (offset < float.Epsilon && faceright)
-			Flip ();
-		
-		if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
-			x = target.position.x > transform.position.x ? 1 : -1;
+			if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
+				x = target.position.x > transform.position.x ? 1 : -1;
+		} 
+		else {
+			x = faceright ? 4 : -4;
+			inverseMoveTime = 5f;
+		}
+
 		Move (x, 0);
 
 		switch (status){
@@ -51,8 +57,7 @@ public class Dragon_Enemy : Enemy {
 		default:
 			break;
 		}
-
-		facingRight = faceright;
+			
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
