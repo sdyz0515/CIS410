@@ -23,8 +23,28 @@ public class GameManager : MonoBehaviour {
 
 	private bool restart = false;
 
+	public GameObject pauseButton, pausePanel;
+
 	void Start () {
-		
+		Time.timeScale = 1;
+		pausePanel.SetActive (false);
+		pauseButton.SetActive (true);
+
+	}
+
+
+	public void OnPause()
+	{
+		pausePanel.SetActive (true);
+		pauseButton.SetActive (false);
+		Time.timeScale = 0;
+	}
+
+	public void UnPause()
+	{
+		pausePanel.SetActive (false);
+		pauseButton.SetActive (true);
+		Time.timeScale = 1;
 	}
 	void Awake()
 	{  

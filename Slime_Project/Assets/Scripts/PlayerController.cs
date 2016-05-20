@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
 	public Transform groundCheck;
 	public LayerMask whatIsGround;
 	public float jumpForce = 200f;
-	public int HP =1;
+	public int HP =6;
 	public float invincible_time  = 1f;
 	public SpriteRenderer renderer;
 	public int eatingCD = 0;

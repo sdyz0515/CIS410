@@ -55,6 +55,7 @@
      <Compile Include="Assets\Scripts\Enemy_Frog.cs" />
      <Compile Include="Assets\Scripts\Eye_Monster.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\HUD.cs" />
      <Compile Include="Assets\Scripts\HurtByContact.cs" />
      <Compile Include="Assets\Scripts\Ice_Block.cs" />
      <Compile Include="Assets\Scripts\Jellyfish.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\Scripts\Move_E.cs" />
      <Compile Include="Assets\Scripts\Move_boss_bolt.cs" />
      <Compile Include="Assets\Scripts\Moving.cs" />
+     <Compile Include="Assets\Scripts\Pause.cs" />
      <Compile Include="Assets\Scripts\PlayerController.cs" />
      <Compile Include="Assets\Scripts\Restart.cs" />
      <Compile Include="Assets\Scripts\SceneManager.cs" />
@@ -73,11 +75,11 @@
      <Compile Include="Assets\Scripts\Weapon.cs" />
      <Compile Include="Assets\Scripts\Weapon_dragon.cs" />
      <Compile Include="Assets\Scripts\generate_eBall.cs" />
- <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
