@@ -1,4 +1,4 @@
-#Slime ?! Operation Guide
+#Slime?! Operations
 
 - Arrow Key: move
 - Space: jump
