@@ -30,7 +30,6 @@ public class BossController: Enemy {
 	}
 
 	void FixedUpdate () {
-		print (Hp);
 		float x = 0.0f;
 		float offset = player.transform.position.x - transform.position.x;
 

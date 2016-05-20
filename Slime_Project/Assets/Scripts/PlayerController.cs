@@ -229,10 +229,10 @@ public class PlayerController : MonoBehaviour
 			break;
 
 		case "Health_pickup":
-			if (HP != 10) {
+			if (HP != 6) {
 				
-				if (HP + 2 > 10)
-					HP = 10;
+				if (HP + 2 > 6)
+					HP = 6;
 				else
 					HP += 2;
 				other.gameObject.SetActive (false);

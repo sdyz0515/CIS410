@@ -12,9 +12,8 @@ public class GameManager : MonoBehaviour {
 	public int enemy_num = 2;
 	public Enemy[] enemyTiles;
 	public Text gameOverText;
-	public Text EatingText;
-	public Text HPText;
-	public Button r_button;
+	//public Button r_button;
+	//public GameObject pauseButton, pausePanel;
 	public AudioClip gameOverSound;
 	public static int level = 0;
 	public static int[] Ability_List = {0,0,0};
@@ -23,32 +22,32 @@ public class GameManager : MonoBehaviour {
 
 	private bool restart = false;
 
-	public GameObject pauseButton, pausePanel;
+
 
 	void Start () {
 		Time.timeScale = 1;
-		pausePanel.SetActive (false);
-		pauseButton.SetActive (true);
+		//pausePanel.SetActive (false);
+		//pauseButton.SetActive (true);
 
 	}
 
 
 	public void OnPause()
 	{
-		pausePanel.SetActive (true);
-		pauseButton.SetActive (false);
+		//pausePanel.SetActive (true);
+		//pauseButton.SetActive (false);
 		Time.timeScale = 0;
 	}
 
 	public void UnPause()
 	{
-		pausePanel.SetActive (false);
-		pauseButton.SetActive (true);
+		//pausePanel.SetActive (false);
+		//pauseButton.SetActive (true);
 		Time.timeScale = 1;
 	}
 	void Awake()
 	{  
-		r_button.gameObject.SetActive (false);
+		//r_button.gameObject.SetActive (false);
 		if (instance == null)
 			instance = this;
 		else if (instance != this)
@@ -74,7 +73,7 @@ public class GameManager : MonoBehaviour {
 		SoundManager.instance.PlaySingle (gameOverSound);
 		gameOverText.text = "Game Over";
 		enabled = false;
-		r_button.gameObject.SetActive (true);
+	//	r_button.gameObject.SetActive (true);
 		restart = true;
 	}
 
@@ -88,8 +87,6 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		HPText.text = "HP: "+ player.HP;
-		EatingText.text = "Eating CD: ";
 		if (player.HP == 0)
 			GameOver ();
 		

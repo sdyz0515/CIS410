@@ -31,7 +31,7 @@ public class Move_boss_bolt : MonoBehaviour {
 
 	void Update() 
 	{	
-		print(inti_postion.x- transform.position.x);
+		
 		faceright = BossController.facingRight;
 		if ((inti_postion.x - transform.position.x) * (inti_postion.x - transform.position.x) >= range * range) {
 			Destroy (gameObject);

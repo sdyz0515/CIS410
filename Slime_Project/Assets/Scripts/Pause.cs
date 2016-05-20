@@ -7,8 +7,8 @@ public class Pause : MonoBehaviour {
 
 	public void Start()
 	{
-		pausePanel.SetActive (false);
-		pauseButton.SetActive (true);
+		//pausePanel.SetActive (false);
+		//pauseButton.SetActive (true);
 	}
 
 	public void OnPause()
