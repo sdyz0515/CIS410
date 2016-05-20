@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 
 
-public class HUD : MonoBehaviour {
+public class AbilityHUD : MonoBehaviour {
 	public Sprite[] MeterSprites;
 	public Image HeartUI;
 	private PlayerController player;
@@ -16,7 +16,7 @@ public class HUD : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		HeartUI.sprite = MeterSprites [player.HP];
+		HeartUI.sprite = MeterSprites [PlayerController.energy];
 
 
 	}

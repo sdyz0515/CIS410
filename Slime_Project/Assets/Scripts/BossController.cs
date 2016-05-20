@@ -7,13 +7,14 @@ using System.Collections;
 public class BossController: Enemy {
 
 	private Transform target;
-	private float Hp = 15.0f;
+	private float Hp = 30.0f;
 	public static bool facingRight = false;
 	private bool faceright = false;
 	private string status;
 	public SpriteRenderer renderer;
 
 	protected override void Start () {
+		inverseMoveTime = 4;
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		bolt_num = 1;
 		base.Start ();
@@ -25,7 +26,7 @@ public class BossController: Enemy {
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
 		transform.localScale = theScale;
-		inverseMoveTime = 2;
+		inverseMoveTime = 4;
 	}
 
 	void FixedUpdate () {
@@ -86,11 +87,11 @@ public class BossController: Enemy {
 			Hp -= 0.5f;
 			Destroy (other.gameObject);
 			SoundManager.instance.PlaySingle (enemyHitSound);
-			status = "iced";
-			renderer.color = Color.blue;
-			inverseMoveTime -= 0.5f;
-			if (inverseMoveTime <= 0.0f)
-				inverseMoveTime = 0.0f;
+			//status = "iced";
+			//renderer.color = Color.blue;
+			//inverseMoveTime -= 0.5f;
+			//if (inverseMoveTime <= 0.0f)
+			//	inverseMoveTime = 0.0f;
 			Death (Hp,gameObject);
 
 			break;

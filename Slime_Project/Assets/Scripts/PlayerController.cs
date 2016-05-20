@@ -71,6 +71,8 @@ public class PlayerController : MonoBehaviour
 
 	void Update () 
 	{   
+		if (energy > 6)
+			energy = 6;
 
 		if (grounded) {
 			isJumping = false;

@@ -45,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\AbilityHUD.cs" />
      <Compile Include="Assets\Scripts\BossController.cs" />
      <Compile Include="Assets\Scripts\Boundary.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
@@ -82,11 +83,11 @@
      <Compile Include="Assets\Scripts\Weapon_dragon.cs" />
      <Compile Include="Assets\Scripts\Weapon_dragon_G.cs" />
      <Compile Include="Assets\Scripts\generate_eBall.cs" />
- <Reference Include="UnityEngine.Networking">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
