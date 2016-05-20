@@ -141,6 +141,19 @@ public class Enemy_Frog : Enemy {
 
 			break;
 
+		case "Electric_Shield":
+			Hp-= 0.5f;
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			if (Hp  <= 0.0f) {
+				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
+				Destroy (deadcopy, 1);
+				Destroy (gameObject);
+			} else {
+				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
+				Destroy (hitcopy, 0.5f);
+			}
+			break;
+		
 		default:
 			break;
 		}

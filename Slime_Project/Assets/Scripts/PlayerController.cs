@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 	private Animator bubble_animator;
 	private bool isJumping = false;
 	private bool isAte = false;
-	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4"};
+	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4","Level_5"};
 	private bool ifdead = false;
 	private Vector2 enemyForce;
 
