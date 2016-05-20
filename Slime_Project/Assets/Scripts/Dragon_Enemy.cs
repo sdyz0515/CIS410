@@ -59,6 +59,10 @@ public class Dragon_Enemy : Enemy {
 	{   
 		switch (other.tag) {
 
+		case "Bound":
+			Flip ();
+			break;
+
 		case "Bolt":
 			Hp-= 1.0f;
 			Destroy (other.gameObject);

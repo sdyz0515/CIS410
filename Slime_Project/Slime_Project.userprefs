@@ -1,10 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/GameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerController.cs">
     <Files>
-      <File FileName="Assets/Scripts/HUD.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="30" Column="32" />
-      <File FileName="Assets/Scripts/Pause.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="45" Column="22" />
+      <File FileName="Assets/Scripts/Move_E.cs" Line="15" Column="14" />
+      <File FileName="Assets/Scripts/Move_E_Blue.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Monster_creatator.cs" Line="7" Column="33" />
+      <File FileName="Assets/Scripts/BossController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -6,7 +6,9 @@ public class PlayerController : MonoBehaviour
 	public float speed;
 	public float maxSpeed = 10f;
 	public Transform groundCheck;
+	public Transform wallCheck;
 	public LayerMask whatIsGround;
+	public LayerMask whatIsGround_1;
 	public float jumpForce = 200f;
 	public int HP =6;
 	public float invincible_time  = 1f;
@@ -17,8 +19,10 @@ public class PlayerController : MonoBehaviour
 	public GameObject bubble;
 
 	private bool grounded = false;
+	private bool wallTouch = false;
 	private Rigidbody2D rb2d;
 	private float groundRadius = 0.2f;
+	private float groundRadius_1 = 0.2f;
 	private int invincible = 1;
 	private int direction = 1;
 	private bool eating = false;
@@ -38,6 +42,7 @@ public class PlayerController : MonoBehaviour
 
 	void Start () 
 	{
+		facingRight = true;
 		animator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D> ();	
 		ifdead = false;
@@ -46,10 +51,12 @@ public class PlayerController : MonoBehaviour
 	void FixedUpdate () 
 	{	if (!ifdead) {
 			grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
+			wallTouch = Physics2D.OverlapCircle (wallCheck.position, groundRadius_1, whatIsGround_1);
 			float move = Input.GetAxis ("Horizontal");
 			Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
-			rb2d.velocity = movement;
-
+			if (!wallTouch) {
+				rb2d.velocity = movement;
+			}
 			if (move > 0 && !facingRight) {
 				direction = -1;
 				Flip ();
@@ -252,7 +259,10 @@ public class PlayerController : MonoBehaviour
 	private void Restart()
 	{	
 		GameManager.level++;
-		facingRight = true;
+		if (!facingRight) {
+			Flip ();
+			facingRight = true;
+		}
 		Application.LoadLevel (Level_list[GameManager.level]);
 		SoundManager.instance.PlayNextBGM (GameManager.level);
 	}

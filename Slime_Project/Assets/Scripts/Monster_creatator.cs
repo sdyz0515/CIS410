@@ -4,13 +4,12 @@ using System.Collections;
 public class Monster_creatator : MonoBehaviour {
 
 
-	public Enemy[] enemyTiles;
-
+	public GameObject[] enemyTiles;
 
 	// Use this for initialization
 	void Start () {
 
-		Enemy enemy = enemyTiles [Random.Range (0, enemyTiles.Length)];
+		GameObject enemy = enemyTiles [Random.Range (0, enemyTiles.Length)];
 		Instantiate (enemy,transform.position,Quaternion.identity);
 	
 	}
