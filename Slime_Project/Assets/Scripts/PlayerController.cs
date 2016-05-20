@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.X)) 
 		{	
-			GameManager.Ability_Index = (GameManager.Ability_Index + 1) % GameManager.Ability_num;
+			GameManager.Ability_Index = (GameManager.Ability_Index + 1) % 3;
 		}
 
 		Weapon.fireMode = GameManager.Ability_List[GameManager.Ability_Index];
@@ -156,12 +156,19 @@ public class PlayerController : MonoBehaviour
 
 	void Add_ability(int num)
 	{
-		if (GameManager.Ability_num >= 3) {
-			GameManager.Ability_List [0] = num;
+		bool IfHas = false;
+		for (int i = 0; i < 3; i++) {
+			if (GameManager.Ability_List [i] == num)
+				IfHas = true;
 		}
-		else
-			GameManager.Ability_List [GameManager.Ability_num] = num;
-		GameManager.Ability_num++;
+		if (!IfHas) {
+
+			if (GameManager.Ability_num >= 3) {
+				GameManager.Ability_List [0] = num;
+			} else
+				GameManager.Ability_List [GameManager.Ability_num] = num;
+			GameManager.Ability_num++;
+		}
 	}
 
 
