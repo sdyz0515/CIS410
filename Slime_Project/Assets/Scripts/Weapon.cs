@@ -8,13 +8,16 @@ public class Weapon : MonoBehaviour {
 	private float nextFire;
 	public static int fireMode = 0;
 
-
 	void Update() 
 	{	
 		if ((Input.GetButton ("Fire1") || Input.GetKey(KeyCode.Z)) && Time.time > nextFire) 
 		{
 			nextFire = Time.time + fireRate;
-			StartCoroutine (Shoot ());
+			if (fireMode == 3) {
+				StartCoroutine (Shield ());
+			} else {
+				StartCoroutine (Shoot ());
+			}
 		}
 	}
 
@@ -24,5 +27,12 @@ public class Weapon : MonoBehaviour {
 		yield return new WaitForSeconds (2);
 		if (shoot != null)
 			Destroy (shoot);
+	}
+
+	IEnumerator Shield() 
+	{	
+		GameObject eShield = Instantiate (shots[fireMode], GameObject.FindGameObjectWithTag("Player").transform.position, transform.rotation) as GameObject;
+		yield return new WaitForSeconds (0.8f);
+		Destroy (eShield);
 	}
 }

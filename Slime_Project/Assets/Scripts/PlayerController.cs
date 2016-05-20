@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 	private bool isAte = false;
 	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4"};
 	private bool ifdead = false;
+	private Vector2 enemyForce;
 
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
@@ -157,6 +158,8 @@ public class PlayerController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+		enemyForce = new Vector2 (direction * 5000f, 0f);
+
 		switch (other.tag) {
 
 		case "Dragon":
@@ -166,7 +169,7 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
-				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+				rb2d.AddForce (enemyForce);
 				isJumping = true;
 				loseHP ();
 			}
@@ -180,16 +183,34 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
-				rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+				rb2d.AddForce (enemyForce);
 				isJumping = true;
 				loseHP ();
 			}
 			break;
 
-
 		case "Enemy_Bolt":
 			Destroy (other.gameObject);
-			rb2d.AddForce (new Vector2 (direction * 10000f, 300f));
+			rb2d.AddForce (enemyForce);
+			isJumping = true;
+			loseHP ();
+			break;
+
+		case "Jellyfish":
+			if (eating) {
+				Destroy (other.gameObject);
+				Add_ability (3);
+				EatingMode (false);
+				SoundManager.instance.PlaySingle (eatEnemySound);
+			} else {
+				rb2d.AddForce (enemyForce);
+				isJumping = true;
+				loseHP ();
+			}
+			break;
+
+		case "Enemy_Eball":
+			rb2d.AddForce (enemyForce);
 			isJumping = true;
 			loseHP ();
 			break;
