@@ -7,8 +7,9 @@ public class Eye_Monster : Enemy {
 	private float Hp = 2.0f;
 	private bool facingRight = true;
 	private string status;
-	public SpriteRenderer renderer;
 
+	public SpriteRenderer renderer;
+	public float speed = 2.0f;
 
 
 	// Use this for initialization
@@ -41,7 +42,7 @@ public class Eye_Monster : Enemy {
 
 		if (Mathf.Abs (target.position.y - transform.position.y) > float.Epsilon)
 			y = target.position.y > transform.position.y ? 1 : -1;
-
+		inverseMoveTime = speed;
 		Move (x, y);
 	}
 

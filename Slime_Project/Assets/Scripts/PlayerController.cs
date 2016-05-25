@@ -10,14 +10,15 @@ public class PlayerController : MonoBehaviour
 	public LayerMask whatIsGround;
 	public LayerMask whatIsGround_1;
 	public float jumpForce = 200f;
-	public int HP =6;
 	public float invincible_time  = 1f;
 	public SpriteRenderer renderer;
 	//public int eatingCD = 0;
 	public static bool facingRight = true;
 	public GameObject hurtParticle;
+	public GameObject deadParticle;
 	public GameObject bubble;
 	public static int energy = 0;
+	public static int HP =6;
 
 	private bool grounded = false;
 	private bool wallTouch = false;
@@ -258,9 +259,11 @@ public class PlayerController : MonoBehaviour
 			break;
 
 		case "Lava": 
+			GameObject dead = Instantiate (deadParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 			Renderer render = GetComponent<Renderer> ();
 			render.enabled = false;
 			ifdead = true;
+			HP = 0;
 			break;
 
 		default:
@@ -285,5 +288,11 @@ public class PlayerController : MonoBehaviour
 		GameObject hurt = Instantiate(hurtParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 		yield return new WaitForSeconds(1.0f);
 		Destroy (hurt);
+	}
+
+	IEnumerator Dead() {
+		GameObject dead = Instantiate(deadParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
+		yield return new WaitForSeconds(1.0f);
+		Destroy (dead);
 	}
 }

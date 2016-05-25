@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour {
 
 	public static GameManager instance = null;
+	public GameObject deadParticle;
 	public PlayerController player;
 	private List<Enemy> enemies;
 	public int enemy_num = 2;
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour {
 	public void GameOver()
 	{	
 		SoundManager.instance.PlaySingle (gameOverSound);
+		Instantiate(deadParticle, gameObject.transform.position, gameObject.transform.rotation);
 		gameOverText.text = "Game Over";
 		enabled = false;
 	//	r_button.gameObject.SetActive (true);
@@ -87,7 +89,7 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (player.HP == 0)
+		if (PlayerController.HP == 0)
 			GameOver ();
 		
 	}

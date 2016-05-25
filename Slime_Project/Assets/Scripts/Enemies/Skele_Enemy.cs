@@ -8,7 +8,7 @@ public class Skele_Enemy: Enemy {
 	private string status;
 	public SpriteRenderer renderer;
 
-	public static bool faceright = true;
+	public bool faceright = true;
 
 	protected override void Start () {
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
