@@ -8,10 +8,19 @@ public class Move_E : MonoBehaviour
 	private int x_direction = 1;
 	private Rigidbody2D rd2d;
 
-	void Start ()
-	{  	
+	void Start () {  	
+		Weapon_dragon weapon = GetComponentInParent<Weapon_dragon> ();
+		if (weapon == null) {
+			Debug.LogError ("Dragon Weapon is null!");
+			return;
+		}
+		Dragon_Enemy dragon = weapon.GetComponentInParent<Dragon_Enemy> ();
+		if (dragon == null) {
+			Debug.LogError ("Dragon is null!");
+			return;
+		}
+		faceright = dragon.faceright;
 
-		faceright = Dragon_Enemy.faceright;
 		if (faceright)
 			x_direction = 1;
 		else
@@ -24,10 +33,7 @@ public class Move_E : MonoBehaviour
 
 		Vector2 movement = new Vector2 (x_direction * speed, rd2d.velocity.y);
 		rd2d.velocity = movement;
-	}
 
-	void Upate() 
-	{
-		faceright = Dragon_Enemy.faceright;
+		transform.parent = null;
 	}
 }

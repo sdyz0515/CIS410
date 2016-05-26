@@ -10,13 +10,7 @@ public class Weapon_dragon_G : MonoBehaviour {
 
 	void Start ()
 	{	
-		//faceright = this.transform.GetComponentsInParent;
 		InvokeRepeating ("Fire_G", delay, fireRate);
-	}
-
-	void Fire_dragon()
-	{
-		Instantiate (shot, transform.position, transform.rotation);
 	}
 
 	void Fire_G ()
@@ -26,10 +20,13 @@ public class Weapon_dragon_G : MonoBehaviour {
 
 	IEnumerator delayCoroutine()
 	{
-		Instantiate (shot, transform.position, transform.rotation);
+		GameObject bolt = Instantiate (shot, transform.position, transform.rotation) as GameObject;
+		bolt.transform.parent = transform;
 		yield return new WaitForSeconds(0.2f);
-		Instantiate (shot, transform.position, transform.rotation);
+		GameObject bolt_1 = Instantiate (shot, transform.position, transform.rotation) as GameObject;
+		bolt_1.transform.parent = transform;
 		yield return new WaitForSeconds(0.2f);
-		Instantiate (shot, transform.position, transform.rotation);
+		GameObject bolt_2 = Instantiate (shot, transform.position, transform.rotation) as GameObject;
+		bolt_2.transform.parent = transform;
 	}
 }

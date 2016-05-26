@@ -5,7 +5,7 @@ public class Dragon_Enemy : Enemy {
 
 	private Transform target;
 	private float Hp = 3.0f;
-	public static bool faceright = true;
+	public bool faceright = true;
 	private string status;
 	public SpriteRenderer renderer;
 

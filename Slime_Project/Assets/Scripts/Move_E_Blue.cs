@@ -10,7 +10,18 @@ public class Move_E_Blue : MonoBehaviour
 
 	void Start ()
 	{  	
-		faceright = Dragon_Enemy_Blue.faceright;
+		Weapon_dragon_G weapon = GetComponentInParent<Weapon_dragon_G> ();
+		if (weapon == null) {
+			Debug.LogError ("Dragon Weapon is null!");
+			return;
+		}
+		Dragon_Enemy_Blue dragon = weapon.GetComponentInParent<Dragon_Enemy_Blue> ();
+		if (dragon == null) {
+			Debug.LogError ("Dragon is null!");
+			return;
+		}
+		faceright = dragon.faceright;
+
 		if (faceright)
 			x_direction = 1;
 		else
@@ -23,12 +34,8 @@ public class Move_E_Blue : MonoBehaviour
 
 		Vector2 movement = new Vector2 (x_direction * speed, rd2d.velocity.y);
 		rd2d.velocity = movement;
-	}
 
-	void Update() 
-	{
-		faceright = Dragon_Enemy_Blue.faceright;
+		transform.parent = null;
 	}
-
 
 }

@@ -4,6 +4,7 @@ using System.Collections;
 public class Weapon_dragon : MonoBehaviour {
 
 	public GameObject shot;
+	private GameObject ItMe;
 	public float fireRate;
 	public float delay;
 
@@ -14,20 +15,8 @@ public class Weapon_dragon : MonoBehaviour {
 
 	void Fire_dragon()
 	{
-		Instantiate (shot, transform.position, transform.rotation);
+		GameObject bolt = Instantiate (shot, transform.position, transform.rotation) as GameObject;
+		bolt.transform.parent = transform;
 	}
 
-	void Fire_bat ()
-	{
-		StartCoroutine("delayCoroutine");   
-	}
-
-	IEnumerator delayCoroutine()
-	{
-		Instantiate (shot, transform.position, transform.rotation);
-		yield return new WaitForSeconds(0.1f);
-		Instantiate (shot, transform.position, transform.rotation);
-		yield return new WaitForSeconds(0.1f);
-		Instantiate (shot, transform.position, transform.rotation);
-	}
 }
