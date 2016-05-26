@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.Sprites;
 
 public class PlayerController : MonoBehaviour 
 {
@@ -19,6 +21,11 @@ public class PlayerController : MonoBehaviour
 	public GameObject bubble;
 	public static int energy = 0;
 	public static int HP =6;
+	public Sprite[] Icon_list;
+	public Image image_1;
+	public Image image_2;
+	public Image image_3;
+
 
 	private bool grounded = false;
 	private bool wallTouch = false;
@@ -49,6 +56,8 @@ public class PlayerController : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D> ();	
 		ifdead = false;
+		image_2.gameObject.SetActive (false);
+		image_3.gameObject.SetActive (false);
 	}
 
 	void FixedUpdate () 
@@ -108,12 +117,27 @@ public class PlayerController : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.X)) 
 		{	
-			GameManager.Ability_Index = (GameManager.Ability_Index + 1) % 3;
+			GameManager.Ability_Index = (GameManager.Ability_Index + 1) % GameManager.Ability_num;
 		}
-
+		updateImage ();
 		Weapon.fireMode = GameManager.Ability_List[GameManager.Ability_Index];
 
 	}
+	void updateImage()
+	{
+		image_1.sprite =Icon_list[GameManager.Ability_List[GameManager.Ability_Index]]; 
+		if (GameManager.Ability_num == 2) {
+			image_2.gameObject.SetActive (true);
+			image_2.sprite =Icon_list[GameManager.Ability_List[(GameManager.Ability_Index+1)%2]];
+		}
+		if(GameManager.Ability_num == 3){
+			image_2.gameObject.SetActive (true);
+			image_3.gameObject.SetActive (true);
+			image_2.sprite =Icon_list[GameManager.Ability_List[(GameManager.Ability_Index+1)%3]];
+			image_3.sprite =Icon_list[GameManager.Ability_List[(GameManager.Ability_Index+2)%3]];
+		}
+	}
+
 	void loseHP()
 	{
 		if (HP > 0 && invincible != 0) {
@@ -169,8 +193,11 @@ public class PlayerController : MonoBehaviour
 			} else
 				GameManager.Ability_List [GameManager.Ability_num] = num;
 			GameManager.Ability_num++;
+			if (GameManager.Ability_num >= 3)
+				GameManager.Ability_num = 3;
 		}
 	}
+
 
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -264,6 +291,18 @@ public class PlayerController : MonoBehaviour
 			render.enabled = false;
 			ifdead = true;
 			HP = 0;
+			break;
+		
+		case "Small_Mushroom":
+			if (eating) {
+				Destroy (other.gameObject);
+				if(facingRight)
+					transform.localScale -= new Vector3(0.2f,0.2f,0f);
+				else
+					transform.localScale -= new Vector3(-0.2f,0.2f,0f);
+				EatingMode (false);
+				SoundManager.instance.PlaySingle (eatEnemySound);
+			}
 			break;
 
 		default:

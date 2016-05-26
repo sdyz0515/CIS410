@@ -16,6 +16,8 @@ public class AbilityHUD : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		if (PlayerController.energy >= 6)
+			PlayerController.energy = 6;
 		HeartUI.sprite = MeterSprites [PlayerController.energy];
 
 

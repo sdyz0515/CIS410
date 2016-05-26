@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour {
 	{	
 		SoundManager.instance.PlaySingle (gameOverSound);
 		Instantiate(deadParticle, gameObject.transform.position, gameObject.transform.rotation);
-		gameOverText.text = "Game Over";
+		//gameOverText.text = "Game Over";
 		enabled = false;
 	//	r_button.gameObject.SetActive (true);
 		restart = true;

@@ -49,6 +49,7 @@ public class BossController: Enemy {
 			if (Hp <= 0) {
 				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
 				Destroy (deadcopy, 1);
+				SoundManager.instance.PlayNextBGM (6); // victory sound
 				Destroy (gameObject);
 			} 
 			break;
