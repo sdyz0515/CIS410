@@ -28,7 +28,8 @@ public class Dragon_Enemy_Green : Enemy {
 	void FixedUpdate () {
 		float x = 0.0f;
 		float offset = player.transform.position.x - transform.position.x;
-		if (Mathf.Abs (offset) <= 5) {
+		float offset_y = player.transform.position.y - transform.position.y;
+		if ((Mathf.Abs (offset) <= 5) && (Mathf.Abs(offset_y) <= 5)) {
 			if (offset > float.Epsilon && !faceright) 
 				Flip ();
 			else if (offset < float.Epsilon && faceright)
@@ -36,6 +37,7 @@ public class Dragon_Enemy_Green : Enemy {
 
 			if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
 				x = target.position.x > transform.position.x ? 1 : -1;
+			inverseMoveTime = 5f;
 		} 
 		else {
 			x = faceright ? 4 : -4;

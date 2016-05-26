@@ -53,7 +53,8 @@ public class Enemy_Frog : Enemy {
 		
 		float x = 0.0f;
 		float offset = player.transform.position.x - transform.position.x;
-		if (Mathf.Abs (offset) <= 5) {
+		float offset_y = player.transform.position.y - transform.position.y;
+		if ((Mathf.Abs (offset) <= 5) && (Mathf.Abs(offset_y) <= 5)) {
 			if (offset > float.Epsilon && !facingRight_1)
 				Flip ();
 			else if (offset < float.Epsilon && facingRight_1)
