@@ -47,4 +47,14 @@ public class SoundManager : MonoBehaviour {
 			BGMList[level].Play ();
 		}
 	}
+
+	public void PlayDeathBGM(int level){
+		BGMList[level].Stop ();
+		BGMList [7].Play ();
+	}
+
+	public void Restart(int level){
+		BGMList [7].Stop ();
+		BGMList[level].Play ();
+	}
 }

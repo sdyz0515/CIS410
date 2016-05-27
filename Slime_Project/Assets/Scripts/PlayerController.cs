@@ -348,6 +348,7 @@ public class PlayerController : MonoBehaviour
 		render.enabled = false;
 		ifdead = true;
 		GameManager.SlimeDead = true;
+		SoundManager.instance.PlayDeathBGM (GameManager.level);
 		Application.LoadLevel ("GameOver");
 	}
 

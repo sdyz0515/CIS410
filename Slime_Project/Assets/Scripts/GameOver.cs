@@ -7,10 +7,12 @@ public class GameOver : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Y)) {
 			Application.LoadLevel (Level_list [GameManager.level]);
+			SoundManager.instance.Restart (GameManager.level);
 		}
 
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			GameManager.level = 0;
+			SoundManager.instance.BGMList [7].Stop ();
 			Application.LoadLevel ("menu");
 		}
 	}
