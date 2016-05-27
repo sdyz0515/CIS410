@@ -9,7 +9,11 @@ public class Dragon_Enemy_Green : Enemy {
 	private string status;
 	public SpriteRenderer renderer;
 
+	public GameObject LargeBubble;
+	private Rigidbody2D body;
+
 	protected override void Start () {
+		body = GetComponent<Rigidbody2D> ();
 		faceright = true;
 		renderer.color = Color.green;
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
@@ -107,12 +111,26 @@ public class Dragon_Enemy_Green : Enemy {
 			Death (Hp,gameObject);
 			break;
 
+		case "Bubble_Bolt":
+			Destroy (other.gameObject);
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			StartCoroutine(freeze());
+			break;
+
 		default:
 			break;
 		}
 	}
 
-
+	IEnumerator freeze(){
+		GameObject BubbleAround = Instantiate (LargeBubble, transform.position, transform.rotation) as GameObject;
+		BubbleAround.transform.parent = transform;
+		body.constraints = RigidbodyConstraints2D.FreezePosition;
+		yield return new WaitForSeconds(2.0f);
+		Destroy (BubbleAround);
+		body.constraints = RigidbodyConstraints2D.None;
+		body.constraints = RigidbodyConstraints2D.FreezeRotation;
+	}
 
 }
 

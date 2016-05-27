@@ -6,9 +6,14 @@ public class Jellyfish : Enemy {
 	private Transform target;
 	private float Hp = 2.0f;
 	private string status;
+	private float imt;
+	private Rigidbody2D body;
+
 	public SpriteRenderer renderer;
+	public GameObject LargeBubble;
 
 	protected override void Start () {
+		body = GetComponent<Rigidbody2D> ();
 		inverseMoveTime = 1.0f;
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		base.Start ();
@@ -27,6 +32,21 @@ public class Jellyfish : Enemy {
 			y = target.position.y > transform.position.y ? 1 : -1;
 
 		Move (x, y);
+
+		switch (status){
+
+		case "burn":
+			Hp -= 0.01f;
+			if (Hp <= 0) {
+				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
+				Destroy (deadcopy, 1);
+				Destroy (gameObject);
+			} 
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -48,7 +68,6 @@ public class Jellyfish : Enemy {
 			status = "burn";
 			renderer.color = Color.red;
 			Death (Hp,gameObject);
-
 			break;
 
 		case "Ice_Bolt":
@@ -61,7 +80,6 @@ public class Jellyfish : Enemy {
 			if (inverseMoveTime <= 0.0f)
 				inverseMoveTime = 0.0f;
 			Death (Hp,gameObject);
-
 			break;
 
 		case "Electric_Shield":
@@ -70,8 +88,24 @@ public class Jellyfish : Enemy {
 			Death (Hp,gameObject);
 			break;
 
+		case "Bubble_Bolt":
+			Destroy (other.gameObject);
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			StartCoroutine(freeze());
+			break;
+
 		default:
 			break;
 		}
+	}
+
+	IEnumerator freeze(){
+		GameObject BubbleAround = Instantiate (LargeBubble, transform.position, transform.rotation) as GameObject;
+		BubbleAround.transform.parent = transform;
+		body.constraints = RigidbodyConstraints2D.FreezePosition;
+		yield return new WaitForSeconds(2.0f);
+		Destroy (BubbleAround);
+		body.constraints = RigidbodyConstraints2D.None;
+		body.constraints = RigidbodyConstraints2D.FreezeRotation;
 	}
 }

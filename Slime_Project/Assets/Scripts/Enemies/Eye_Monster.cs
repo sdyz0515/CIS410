@@ -11,9 +11,13 @@ public class Eye_Monster : Enemy {
 	public SpriteRenderer renderer;
 	public float speed = 2.0f;
 
+	public GameObject LargeBubble;
+	private Rigidbody2D body;
+
 
 	// Use this for initialization
 	protected override void Start () {
+		body = GetComponent<Rigidbody2D> ();
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		base.Start ();
 	}
@@ -44,6 +48,21 @@ public class Eye_Monster : Enemy {
 			y = target.position.y > transform.position.y ? 1 : -1;
 		inverseMoveTime = speed;
 		Move (x, y);
+
+		switch (status){
+
+		case "burn":
+			Hp -= 0.01f;
+			if (Hp <= 0) {
+				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
+				Destroy (deadcopy, 1);
+				Destroy (gameObject);
+			} 
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
@@ -87,8 +106,24 @@ public class Eye_Monster : Enemy {
 			Death (Hp,gameObject);
 			break;
 
+		case "Bubble_Bolt":
+			Destroy (other.gameObject);
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			StartCoroutine(freeze());
+			break;
+
 		default:
 			break;
 		}
+	}
+
+	IEnumerator freeze(){
+		GameObject BubbleAround = Instantiate (LargeBubble, transform.position, transform.rotation) as GameObject;
+		BubbleAround.transform.parent = transform;
+		body.constraints = RigidbodyConstraints2D.FreezePosition;
+		yield return new WaitForSeconds(2.0f);
+		Destroy (BubbleAround);
+		body.constraints = RigidbodyConstraints2D.None;
+		body.constraints = RigidbodyConstraints2D.FreezeRotation;
 	}
 }

@@ -5,12 +5,15 @@ public class Dragon_Enemy : Enemy {
 
 	private Transform target;
 	private float Hp = 3.0f;
+	private Rigidbody2D body;
 	public bool faceright;
 	private string status;
 	public SpriteRenderer renderer;
 	public bool itMove;
+	public GameObject LargeBubble;
 
 	protected override void Start () {
+		body = GetComponent<Rigidbody2D> ();
 		if (itMove)
 			faceright = true;
 		else		
@@ -111,12 +114,26 @@ public class Dragon_Enemy : Enemy {
 			Death (Hp,gameObject);
 			break;
 
+		case "Bubble_Bolt":
+			Destroy (other.gameObject);
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			StartCoroutine(freeze());
+			break;
+
 		default:
 			break;
 		}
 	}
 
-
+	IEnumerator freeze(){
+		GameObject BubbleAround = Instantiate (LargeBubble, transform.position, transform.rotation) as GameObject;
+		BubbleAround.transform.parent = transform;
+		body.constraints = RigidbodyConstraints2D.FreezePosition;
+		yield return new WaitForSeconds(2.0f);
+		Destroy (BubbleAround);
+		body.constraints = RigidbodyConstraints2D.None;
+		body.constraints = RigidbodyConstraints2D.FreezeRotation;
+	}
 
 }
 

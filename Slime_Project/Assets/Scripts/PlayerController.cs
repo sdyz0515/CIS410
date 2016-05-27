@@ -117,6 +117,8 @@ public class PlayerController : MonoBehaviour
 		}
 		if (Input.GetKeyDown (KeyCode.X)) 
 		{	
+			if (GameManager.Ability_num>=3)
+				GameManager.Ability_num = 3;
 			GameManager.Ability_Index = (GameManager.Ability_Index + 1) % GameManager.Ability_num;
 		}
 		updateImage ();
@@ -249,6 +251,19 @@ public class PlayerController : MonoBehaviour
 			if (eating) {
 				Destroy (other.gameObject);
 				Add_ability (3);
+				EatingMode (false);
+				SoundManager.instance.PlaySingle (eatEnemySound);
+			} else {
+				rb2d.AddForce (enemyForce);
+				isJumping = true;
+				loseHP ();
+			}
+			break;
+
+		case "Fish":
+			if (eating) {
+				Destroy (other.gameObject);
+				Add_ability (4);
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {

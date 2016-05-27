@@ -8,12 +8,14 @@ public class Enemy_Frog : Enemy {
 	public float jumpForce = 200f;
 	public Transform groundCheck;
 	public float JumpRate;
+	public GameObject LargeBubble;
 
 	private bool grounded = false;
 	private bool isJumping = false;
 	private Animator animator;
 	private float groundRadius = 0.2f;
 	private float nextJump;
+	private Rigidbody2D body;
 
 	private Transform target;
 	private float Hp = 3.0f;
@@ -22,6 +24,7 @@ public class Enemy_Frog : Enemy {
 
 	protected override void Start () 
 	{
+		body = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator> ();
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		bolt_num = 1;
@@ -133,9 +136,25 @@ public class Enemy_Frog : Enemy {
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			Death (Hp,gameObject);
 			break;
+
+		case "Bubble_Bolt":
+			Destroy (other.gameObject);
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			StartCoroutine(freeze());
+			break;
 		
 		default:
 			break;
 		}
+	}
+
+	IEnumerator freeze(){
+		GameObject BubbleAround = Instantiate (LargeBubble, transform.position, transform.rotation) as GameObject;
+		BubbleAround.transform.parent = transform;
+		body.constraints = RigidbodyConstraints2D.FreezePosition;
+		yield return new WaitForSeconds(2.0f);
+		Destroy (BubbleAround);
+		body.constraints = RigidbodyConstraints2D.None;
+		body.constraints = RigidbodyConstraints2D.FreezeRotation;
 	}
 }

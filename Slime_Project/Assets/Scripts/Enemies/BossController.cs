@@ -146,6 +146,11 @@ public class BossController: Enemy {
 			}
 			break;
 
+		case "Bubble_Bolt":
+			Destroy (other.gameObject);
+			SoundManager.instance.PlaySingle (enemyHitSound);
+			break;
+
 		default:
 			break;
 		}

@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Move_E.cs" />
      <Compile Include="Assets\Scripts\Move_E_Blue.cs" />
      <Compile Include="Assets\Scripts\Move_E_Green.cs" />
+     <Compile Include="Assets\Scripts\Move_E_fish.cs" />
      <Compile Include="Assets\Scripts\Move_boss_bolt.cs" />
      <Compile Include="Assets\Scripts\Moving.cs" />
      <Compile Include="Assets\Scripts\Pause.cs" />
@@ -81,12 +82,13 @@
      <Compile Include="Assets\Scripts\Weapon.cs" />
      <Compile Include="Assets\Scripts\Weapon_dragon.cs" />
      <Compile Include="Assets\Scripts\Weapon_dragon_G.cs" />
+     <Compile Include="Assets\Scripts\Weapon_fish.cs" />
      <Compile Include="Assets\Scripts\generate_eBall.cs" />
- <Reference Include="UnityEngine.UI">
- <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
