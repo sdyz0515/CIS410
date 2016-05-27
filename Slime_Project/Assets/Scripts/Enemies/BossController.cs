@@ -7,7 +7,7 @@ using System.Collections;
 public class BossController: Enemy {
 
 	private Transform target;
-	private float Hp = 30.0f;
+	private float Hp = 2.0f;
 	public static bool facingRight = false;
 	private bool faceright = false;
 	private string status;
@@ -47,10 +47,7 @@ public class BossController: Enemy {
 		case "burn":
 			Hp -= 0.01f;
 			if (Hp <= 0) {
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				SoundManager.instance.PlayNextBGM (6); // victory sound
-				Destroy (gameObject);
+				Boss_Dead ();
 			} 
 			break;
 
@@ -70,10 +67,7 @@ public class BossController: Enemy {
 			Destroy (other.gameObject);
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			if (Hp <= 0){
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				SoundManager.instance.PlayNextBGM (6); // victory sound
-				Destroy (gameObject);
+				Boss_Dead ();
 			}
 			else{
 				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
@@ -89,10 +83,7 @@ public class BossController: Enemy {
 			status = "burn";
 			renderer.color = Color.red;
 			if (Hp <= 0){
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				SoundManager.instance.PlayNextBGM (6); // victory sound
-				Destroy (gameObject);
+				Boss_Dead ();
 			}
 			else{
 				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
@@ -104,16 +95,8 @@ public class BossController: Enemy {
 			Hp -= 0.5f;
 			Destroy (other.gameObject);
 			SoundManager.instance.PlaySingle (enemyHitSound);
-			//status = "iced";
-			//renderer.color = Color.blue;
-			//inverseMoveTime -= 0.5f;
-			//if (inverseMoveTime <= 0.0f)
-			//	inverseMoveTime = 0.0f;
 			if (Hp <= 0){
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				SoundManager.instance.PlayNextBGM (6); // victory sound
-				Destroy (gameObject);
+				Boss_Dead ();
 			}
 			else{
 				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
@@ -135,10 +118,7 @@ public class BossController: Enemy {
 			Hp-= 0.5f;
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			if (Hp <= 0){
-				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
-				Destroy (deadcopy, 1);
-				SoundManager.instance.PlayNextBGM (6); // victory sound
-				Destroy (gameObject);
+				Boss_Dead ();
 			}
 			else{
 				GameObject hitcopy = Instantiate (hit, transform.position, transform.rotation) as GameObject;
@@ -154,5 +134,13 @@ public class BossController: Enemy {
 		default:
 			break;
 		}
+	}
+
+	void Boss_Dead(){
+		GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
+		Destroy (deadcopy, 1);
+		SoundManager.instance.PlayNextBGM (6); // victory sound
+		Destroy (gameObject);
+		Application.LoadLevel ("Congrats");
 	}
 }

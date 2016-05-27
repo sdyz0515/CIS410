@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\HUD.cs" />
      <Compile Include="Assets\Scripts\HurtByContact.cs" />
      <Compile Include="Assets\Scripts\Ice_Block.cs" />
+     <Compile Include="Assets\Scripts\Jump.cs" />
      <Compile Include="Assets\Scripts\Menu.cs" />
      <Compile Include="Assets\Scripts\Move.cs" />
      <Compile Include="Assets\Scripts\Move_E.cs" />
@@ -80,6 +81,7 @@
      <Compile Include="Assets\Scripts\SceneManager.cs" />
      <Compile Include="Assets\Scripts\SoundManager.cs" />
      <Compile Include="Assets\Scripts\TrapForce.cs" />
+     <Compile Include="Assets\Scripts\Victory.cs" />
      <Compile Include="Assets\Scripts\Wall.cs" />
      <Compile Include="Assets\Scripts\Weapon.cs" />
      <Compile Include="Assets\Scripts\Weapon_dragon.cs" />
