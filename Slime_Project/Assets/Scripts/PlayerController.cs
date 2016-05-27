@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
 	private bool wallTouch = false;
 	private Rigidbody2D rb2d;
 	private float groundRadius = 0.2f;
-	private float groundRadius_1 = 0.2f;
+	public float groundRadius_1 = 0.2f;
 	private int invincible = 1;
 	private int direction = 1;
 	private bool eating = false;
@@ -221,6 +221,12 @@ public class PlayerController : MonoBehaviour
 		toEnemyForce = new Vector2 (-1 * direction * 5000f, 0f);
 
 		switch (other.tag) {
+		case "Boss":
+			Vector2 bossForce = new Vector2 (direction * 15000f, 0f);
+			rb2d.AddForce (bossForce);
+			isJumping = true;
+			loseHP ();
+			break;
 
 		case "Dragon":
 			if (eating) {

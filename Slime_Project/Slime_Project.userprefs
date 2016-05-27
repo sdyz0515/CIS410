@@ -1,10 +1,10 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Victory.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerController.cs">
     <Files>
-      <File FileName="Assets/Scripts/GameOver.cs" Line="18" Column="3" />
-      <File FileName="Assets/Scripts/Victory.cs" Line="9" Column="36" />
-      <File FileName="Assets/Scripts/Enemies/BossController.cs" Line="10" Column="22" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="303" Column="10" />
+      <File FileName="Assets/Scripts/SceneManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/TrapForce.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

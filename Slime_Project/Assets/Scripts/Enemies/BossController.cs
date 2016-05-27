@@ -7,7 +7,7 @@ using System.Collections;
 public class BossController: Enemy {
 
 	private Transform target;
-	private float Hp = 2.0f;
+	private float Hp = 10.0f;
 	public static bool facingRight = false;
 	private bool faceright = false;
 	private string status;
@@ -40,6 +40,7 @@ public class BossController: Enemy {
 
 		if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
 			x = target.position.x > transform.position.x ? 1 : -1;
+		//inverseMoveTime = 4;
 		Move (x, 0);
 
 		switch (status){
