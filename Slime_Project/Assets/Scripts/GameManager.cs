@@ -10,20 +10,16 @@ public class GameManager : MonoBehaviour {
 	public GameObject deadParticle;
 	public PlayerController player;
 	private List<Enemy> enemies;
+	private bool restart = false;
+
 	public int enemy_num = 2;
 	public Enemy[] enemyTiles;
-	public Text gameOverText;
-	//public Button r_button;
-	//public GameObject pauseButton, pausePanel;
 	public AudioClip gameOverSound;
 	public static int level = 0;
 	public static int[] Ability_List = {0,0,0};
 	public static int Ability_Index = 0;
 	public static int Ability_num = 1;
-
-	private bool restart = false;
-
-
+	public static bool SlimeDead;
 
 	void Start () {
 		Time.timeScale = 1;
@@ -54,28 +50,13 @@ public class GameManager : MonoBehaviour {
 		else if (instance != this)
 			Destroy (gameObject);
 
-		//DontDestroyOnLoad (gameObject);
-		enemies = new List<Enemy> ();
-		for (int i = 0; i < enemy_num; i++) {
-			Enemy enemy = enemyTiles [Random.Range (0, enemyTiles.Length)];
-			//Instantiate (enemy,new Vector3(4.87f,-0.48f,0.00f),Quaternion.identity);
-
-		}
-		InitGame ();
-	}
-
-	void InitGame()
-	{	
-
 	}
 
 	public void GameOver()
 	{	
 		SoundManager.instance.PlaySingle (gameOverSound);
 		Instantiate(deadParticle, gameObject.transform.position, gameObject.transform.rotation);
-		//gameOverText.text = "Game Over";
 		enabled = false;
-	//	r_button.gameObject.SetActive (true);
 		restart = true;
 	}
 
@@ -84,13 +65,9 @@ public class GameManager : MonoBehaviour {
 	{
 		enemies.Add (script);
 	}
-
-
-	
-	// Update is called once per frame
+		
 	void Update () {
 		if (PlayerController.HP == 0)
 			GameOver ();
-		
 	}
 }

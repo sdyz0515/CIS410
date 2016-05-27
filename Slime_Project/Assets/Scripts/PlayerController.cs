@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 	public float jumpForce = 200f;
 	public float invincible_time  = 1f;
 	public SpriteRenderer renderer;
-	//public int eatingCD = 0;
+
 	public static bool facingRight = true;
 	public GameObject hurtParticle;
 	public GameObject deadParticle;
@@ -52,12 +52,22 @@ public class PlayerController : MonoBehaviour
 
 	void Start () 
 	{
+		if (GameManager.SlimeDead) {
+			HP = 6;
+			energy = 0;
+			if (!facingRight) {
+				Flip ();
+				facingRight = true;
+			}
+		}
+
 		facingRight = true;
 		animator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D> ();	
 		ifdead = false;
 		image_2.gameObject.SetActive (false);
 		image_3.gameObject.SetActive (false);
+		GameManager.SlimeDead = false;
 	}
 
 	void FixedUpdate () 
@@ -82,6 +92,9 @@ public class PlayerController : MonoBehaviour
 
 	void Update () 
 	{   
+		if (HP == 0)
+			GameOver ();
+		
 		if (energy > 6)
 			energy = 6;
 
@@ -326,6 +339,17 @@ public class PlayerController : MonoBehaviour
 
 	}
 
+	private void GameOver() {
+		if (!facingRight) {
+			Flip ();
+			facingRight = true;
+		}
+		Renderer render = GetComponent<Renderer> ();
+		render.enabled = false;
+		ifdead = true;
+		GameManager.SlimeDead = true;
+		Application.LoadLevel ("GameOver");
+	}
 
 	private void Restart()
 	{	
