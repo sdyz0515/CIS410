@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Fish : Enemy {
 
-	private Transform target;
+	//private Transform target;
 	private float Hp = 2.0f;
 	public bool facingRight = true;
 	private string status;
@@ -17,7 +17,7 @@ public class Fish : Enemy {
 	// Use this for initialization
 	protected override void Start () {
 		body = GetComponent<Rigidbody2D> ();
-		target = GameObject.FindGameObjectWithTag ("Player").transform;
+		//target = GameObject.FindGameObjectWithTag ("Player").transform;
 		base.Start ();
 	}
 
@@ -31,7 +31,7 @@ public class Fish : Enemy {
 
 	void FixedUpdate () {
 		float x = 0.0f;
-		float offset = player.transform.position.x - transform.position.x;
+		//float offset = player.transform.position.x - transform.position.x;
 
 		x = facingRight ? 4 : -4;
 		inverseMoveTime = 2f;

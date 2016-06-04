@@ -7,6 +7,9 @@ public class Weapon : MonoBehaviour {
 	public List<GameObject> shots;
 	private float nextFire;
 	public static int fireMode = 0;
+	public Vector2 offset;
+
+	private Vector2 pos;
 
 	void Update() 
 	{	
@@ -14,8 +17,10 @@ public class Weapon : MonoBehaviour {
 		{
 			nextFire = Time.time + fireRate;
 			if (fireMode == 3) {
+				StartCoroutine (eShield ());
+			} else if (fireMode == 5) {
 				StartCoroutine (Shield ());
-			} else {
+			}else {
 				StartCoroutine (Shoot ());
 			}
 		}
@@ -29,10 +34,27 @@ public class Weapon : MonoBehaviour {
 			Destroy (shoot);
 	}
 
-	IEnumerator Shield() 
+	IEnumerator eShield() 
 	{	
-		GameObject eShield = Instantiate (shots[fireMode], GameObject.FindGameObjectWithTag("Player").transform.position, transform.rotation) as GameObject;
+		pos = GameObject.FindGameObjectWithTag("Player").transform.position;
+		GameObject eShield = Instantiate (shots[fireMode], pos, transform.rotation) as GameObject;
 		yield return new WaitForSeconds (0.8f);
 		Destroy (eShield);
 	}
+
+	IEnumerator Shield()
+	{
+		if (PlayerController.facingRight) {
+			pos = ((Vector2)GameObject.FindGameObjectWithTag("Player").transform.position) + (offset);
+		}
+		else {
+			pos = ((Vector2)GameObject.FindGameObjectWithTag("Player").transform.position) - (offset);
+		}
+		GameObject shield = Instantiate (shots[fireMode], pos, transform.rotation) as GameObject;
+		yield return new WaitForSeconds (1f);
+		Destroy (shield);
+
+	}
+
+
 }
