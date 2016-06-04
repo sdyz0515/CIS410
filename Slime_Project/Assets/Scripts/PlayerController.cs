@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
 	private Rigidbody2D rb2d;
 	private float groundRadius = 0.2f;
 	public float groundRadius_1 = 0.2f;
-	private int invincible = 1;
+	private bool invincible = false;
 	private int direction = 1;
 	private bool eating = false;
 	private Animator animator;
@@ -155,10 +155,11 @@ public class PlayerController : MonoBehaviour
 
 	void loseHP()
 	{
-		if (HP > 0 && invincible != 0) {
+		if (HP > 0 && !invincible) {
 			GameObject hurt = Instantiate (hurtParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 			HP--;
-			invincible = 1;
+			invincible = true;
+			Invoke ("CancelInvincible", 0.5);
 			EatingMode (false);
 			Destroy (hurt, 1);
 			SoundManager.instance.PlaySingle (hitSound);
@@ -182,6 +183,11 @@ public class PlayerController : MonoBehaviour
 	void CancelEatingMode(){
 		renderer.color = Color.white;
 		eating = false;
+	}
+
+	void CancelInvincible(){
+		if(invincible)
+			invincible = false;
 	}
 
 
@@ -235,11 +241,13 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
-				rb2d.AddForce (enemyForce);
 				isJumping = true;
 				loseHP ();
-				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-				Enemy.AddForce (toEnemyForce);
+				if (!invincible) {
+					rb2d.AddForce (enemyForce);
+					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+					Enemy.AddForce (toEnemyForce);
+				}
 			}
 			break;
 		
@@ -251,11 +259,13 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
-				rb2d.AddForce (enemyForce);
 				isJumping = true;
 				loseHP ();
-				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-				Enemy.AddForce (toEnemyForce);
+				rb2d.AddForce (enemyForce);
+				if (!invincible) {
+					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+					Enemy.AddForce (toEnemyForce);
+				}
 			}
 			break;
 
@@ -273,9 +283,13 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
-				rb2d.AddForce (enemyForce);
 				isJumping = true;
 				loseHP ();
+				if (!invincible) {
+					rb2d.AddForce (enemyForce);
+					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+					Enemy.AddForce (toEnemyForce);
+				}
 			}
 			break;
 
@@ -286,9 +300,13 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
-				rb2d.AddForce (enemyForce);
 				isJumping = true;
 				loseHP ();
+				if (!invincible) {
+					rb2d.AddForce (enemyForce);
+					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+					Enemy.AddForce (toEnemyForce);
+				}
 			}
 			break;
 
