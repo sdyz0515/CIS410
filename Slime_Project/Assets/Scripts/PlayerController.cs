@@ -9,10 +9,12 @@ public class PlayerController : MonoBehaviour
 	public float maxSpeed = 10f;
 	public Transform groundCheck;
 	public Transform wallCheck;
+	public Transform Back_attack_Check;
 	public LayerMask whatIsGround;
 	public LayerMask whatIsGround_1;
+	public LayerMask whatIsEnemy;
 	public float jumpForce = 200f;
-	public float invincible_time  = 1f;
+	public float invincible_time  = 0.2f;
 	public SpriteRenderer renderer;
 
 	public static bool facingRight = true;
@@ -25,13 +27,16 @@ public class PlayerController : MonoBehaviour
 	public Image image_1;
 	public Image image_2;
 	public Image image_3;
-
+	public float xlen = 0.25f;
+	public float ylen = 0.5f;
+	public float groundRadius = 0.2f;
+	public float bakcRadius = 0.2f;
+	public float repel_yForce = 100f;
 
 	private bool grounded = false;
 	private bool wallTouch = false;
+	private bool backContact = false;
 	private Rigidbody2D rb2d;
-	private float groundRadius = 0.2f;
-	public float groundRadius_1 = 0.2f;
 	private bool invincible = false;
 	private int direction = 1;
 	private bool eating = false;
@@ -42,7 +47,7 @@ public class PlayerController : MonoBehaviour
 	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4","Level_5"};
 	private bool ifdead = false;
 	private Vector2 enemyForce;
-	private Vector2 toEnemyForce;
+	private float[] transpa = { 0.2f, 1f };
 
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
@@ -65,6 +70,8 @@ public class PlayerController : MonoBehaviour
 		animator = GetComponent<Animator> ();
 		rb2d = GetComponent<Rigidbody2D> ();	
 		ifdead = false;
+		invincible = false;
+		isJumping = false;
 		image_2.gameObject.SetActive (false);
 		image_3.gameObject.SetActive (false);
 		GameManager.SlimeDead = false;
@@ -72,13 +79,28 @@ public class PlayerController : MonoBehaviour
 
 	void FixedUpdate () 
 	{	if (!ifdead) {
+
+			Vector2 pointA, pointB;
+			pointA = wallCheck.position;
+			if (!facingRight) {
+				pointB.x = pointA.x - xlen;
+				pointB.y = pointA.y + ylen;
+			}
+			else {
+				pointB.x = pointA.x + xlen;
+				pointB.y = pointA.y + ylen;
+			}
+			
 			grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
-			wallTouch = Physics2D.OverlapCircle (wallCheck.position, groundRadius_1, whatIsGround_1);
+			wallTouch = Physics2D.OverlapArea (pointA, pointB, whatIsGround_1);
+			Debug.Log (wallCheck);
 			float move = Input.GetAxis ("Horizontal");
 			Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
-			if (!wallTouch) {
-				rb2d.velocity = movement;
+			if (wallTouch || invincible) {
 			}
+			else
+				rb2d.velocity = movement;
+			
 			if (move > 0 && !facingRight) {
 				direction = -1;
 				Flip ();
@@ -138,6 +160,7 @@ public class PlayerController : MonoBehaviour
 		Weapon.fireMode = GameManager.Ability_List[GameManager.Ability_Index];
 
 	}
+
 	void updateImage()
 	{
 		image_1.sprite =Icon_list[GameManager.Ability_List[GameManager.Ability_Index]]; 
@@ -158,11 +181,11 @@ public class PlayerController : MonoBehaviour
 		if (HP > 0 && !invincible) {
 			GameObject hurt = Instantiate (hurtParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 			HP--;
-			invincible = true;
-			Invoke ("CancelInvincible", 0.5f);
 			EatingMode (false);
-			Destroy (hurt, 1);
+			invincible = true;
 			SoundManager.instance.PlaySingle (hitSound);
+			StartCoroutine(Flash(invincible_time, 0.1f));
+			Destroy (hurt, 1);
 		}
 	}
 
@@ -189,7 +212,6 @@ public class PlayerController : MonoBehaviour
 		if(invincible)
 			invincible = false;
 	}
-
 
 	void Flip () 
 	{
@@ -223,15 +245,41 @@ public class PlayerController : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		enemyForce = new Vector2 (direction * 5000f, 0f);
-		toEnemyForce = new Vector2 (-1 * direction * 5000f, 0f);
+		int repelDirection = 1;
+		backContact = Physics2D.OverlapCircle (Back_attack_Check.position, bakcRadius, whatIsEnemy);
+		if (backContact) {
+			if (!facingRight)
+				repelDirection = -1;
+		} else {
+			if (facingRight)
+				repelDirection = -1;
+		}
+		enemyForce = new Vector2 (repelDirection * jumpForce, repel_yForce);
 
 		switch (other.tag) {
 		case "Boss":
-			Vector2 bossForce = new Vector2 (direction * 15000f, 0f);
+			Vector2 bossForce = new Vector2 (repelDirection * 1000f, 500f);
 			rb2d.AddForce (bossForce);
 			isJumping = true;
 			loseHP ();
+			break;
+
+		case "Skeleton":
+			Debug.Log ("Skeleton");
+			if (eating) {
+				Destroy (other.gameObject);
+				Add_ability (1);
+				EatingMode (false);
+				SoundManager.instance.PlaySingle (eatEnemySound);
+			} else {
+				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+				RigidbodyConstraints2D originalConstraints = Enemy.constraints;
+				isJumping = true;
+				rb2d.AddForce (enemyForce);
+				Enemy.constraints = RigidbodyConstraints2D.FreezeAll;
+				loseHP ();
+				StartCoroutine(CancelEnemyFreeze(Enemy, originalConstraints));
+			}
 			break;
 
 		case "Dragon":
@@ -241,16 +289,16 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
+				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+				RigidbodyConstraints2D originalConstraints = Enemy.constraints;
 				isJumping = true;
-				loseHP ();
-				if (!invincible) {
-					rb2d.AddForce (enemyForce);
-					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					Enemy.AddForce (toEnemyForce);
-				}
+				rb2d.AddForce (enemyForce);
+				Enemy.constraints = RigidbodyConstraints2D.FreezeAll;
+				loseHP ();					
+				StartCoroutine(CancelEnemyFreeze(Enemy, originalConstraints));
+					
 			}
 			break;
-		
 		
 		case "Eye_Monster":
 			if (eating) {
@@ -259,13 +307,13 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
+				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+				RigidbodyConstraints2D originalConstraints = Enemy.constraints;
 				isJumping = true;
-				loseHP ();
 				rb2d.AddForce (enemyForce);
-				if (!invincible) {
-					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					Enemy.AddForce (toEnemyForce);
-				}
+				Enemy.constraints = RigidbodyConstraints2D.FreezeAll;
+				loseHP ();
+				StartCoroutine(CancelEnemyFreeze(Enemy, originalConstraints));
 			}
 			break;
 
@@ -283,13 +331,13 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
+				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+				RigidbodyConstraints2D originalConstraints = Enemy.constraints;
 				isJumping = true;
+				rb2d.AddForce (enemyForce);
+				Enemy.constraints = RigidbodyConstraints2D.FreezeAll;
 				loseHP ();
-				if (!invincible) {
-					rb2d.AddForce (enemyForce);
-					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					Enemy.AddForce (toEnemyForce);
-				}
+				StartCoroutine(CancelEnemyFreeze(Enemy, originalConstraints));
 			}
 			break;
 
@@ -300,13 +348,13 @@ public class PlayerController : MonoBehaviour
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
+				Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
+				RigidbodyConstraints2D originalConstraints = Enemy.constraints;
 				isJumping = true;
+				rb2d.AddForce (enemyForce);
+				Enemy.constraints = RigidbodyConstraints2D.FreezeAll;
 				loseHP ();
-				if (!invincible) {
-					rb2d.AddForce (enemyForce);
-					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					Enemy.AddForce (toEnemyForce);
-				}
+				StartCoroutine(CancelEnemyFreeze(Enemy, originalConstraints));
 			}
 			break;
 
@@ -317,7 +365,6 @@ public class PlayerController : MonoBehaviour
 			break;
 
 		case "Trap":
-			//rb2d.AddForce (new Vector2 (0f, 1000f));
 			loseHP ();
 			break;
 
@@ -343,9 +390,10 @@ public class PlayerController : MonoBehaviour
 			render.enabled = false;
 			ifdead = true;
 			HP = 0;
+			Destroy (dead, 1);
 			break;
 		
-		case "Small_Mushroom":
+		case "SmallMushroom":
 			if (eating) {
 				Destroy (other.gameObject);
 				if(facingRight)
@@ -360,10 +408,10 @@ public class PlayerController : MonoBehaviour
 		default:
 			break;
 		}
-
 	}
 
-	private void GameOver() {
+	private void GameOver() 
+	{
 		if (!facingRight) {
 			Flip ();
 			facingRight = true;
@@ -387,15 +435,38 @@ public class PlayerController : MonoBehaviour
 		SoundManager.instance.PlayNextBGM (GameManager.level);
 	}
 
-	IEnumerator Hurt() {
+	IEnumerator Hurt() 
+	{
 		GameObject hurt = Instantiate(hurtParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 		yield return new WaitForSeconds(1.0f);
 		Destroy (hurt);
 	}
 
-	IEnumerator Dead() {
+	IEnumerator Dead() 
+	{
 		GameObject dead = Instantiate(deadParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 		yield return new WaitForSeconds(1.0f);
 		Destroy (dead);
+	}
+
+	IEnumerator Flash(float time, float intervalTime)
+	{
+		int index = 0;
+		int i = 0;
+		for (i = 0; i < 8; i++)
+		{	
+			gameObject.GetComponent<Renderer> ().material.color = new Color(1.0f,1.0f,1.0f,transpa[index % 2]);
+			index++;
+			yield return new WaitForSeconds(intervalTime);
+		}
+		gameObject.GetComponent<Renderer> ().material.color = new Color(1.0f,1.0f,1.0f,1.0f);
+		invincible = false;
+	}
+
+	IEnumerator CancelEnemyFreeze(Rigidbody2D Enemy, RigidbodyConstraints2D originalConstraints) {
+		yield return new WaitForSeconds(invincible_time);
+		if (Enemy != null) {
+			Enemy.constraints = originalConstraints;
+		}
 	}
 }

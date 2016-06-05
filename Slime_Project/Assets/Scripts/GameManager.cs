@@ -55,9 +55,10 @@ public class GameManager : MonoBehaviour {
 	public void GameOver()
 	{	
 		SoundManager.instance.PlaySingle (gameOverSound);
-		Instantiate(deadParticle, gameObject.transform.position, gameObject.transform.rotation);
+		GameObject dead = Instantiate (deadParticle, gameObject.transform.position, gameObject.transform.rotation) as GameObject;
 		enabled = false;
 		restart = true;
+		Destroy(dead, 1);
 	}
 
 

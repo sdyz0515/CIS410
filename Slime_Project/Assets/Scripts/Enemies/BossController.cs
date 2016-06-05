@@ -7,7 +7,7 @@ using System.Collections;
 public class BossController: Enemy {
 
 	private Transform target;
-	private float Hp = 10.0f;
+	private float Hp = 15.0f;
 	public static bool facingRight = false;
 	private bool faceright = false;
 	private string status;
@@ -46,7 +46,7 @@ public class BossController: Enemy {
 		switch (status){
 
 		case "burn":
-			Hp -= 0.01f;
+			Hp -= 0.005f;
 			if (Hp <= 0) {
 				Boss_Dead ();
 			} 

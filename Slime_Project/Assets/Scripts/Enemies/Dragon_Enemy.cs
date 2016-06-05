@@ -11,6 +11,7 @@ public class Dragon_Enemy : Enemy {
 	public SpriteRenderer renderer;
 	public bool itMove;
 	public GameObject LargeBubble;
+	public float speed = 5.0f;
 
 	protected override void Start () {
 		body = GetComponent<Rigidbody2D> ();
@@ -43,11 +44,11 @@ public class Dragon_Enemy : Enemy {
 
 			if (Mathf.Abs (target.position.x - transform.position.x) > float.Epsilon)
 				x = target.position.x > transform.position.x ? 1 : -1;
-				inverseMoveTime = 5f;
+			inverseMoveTime = speed;
 		} 
 		else {
 			x = faceright ? 4 : -4;
-			inverseMoveTime = 5f;
+			inverseMoveTime = speed;
 		}
 
 		Move (x, 0);
@@ -57,6 +58,7 @@ public class Dragon_Enemy : Enemy {
 		case "burn":
 			Hp -= 0.01f;
 			if (Hp <= 0) {
+				PlayerController.energy += 3;
 				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
 				Destroy (deadcopy, 1);
 				Destroy (gameObject);

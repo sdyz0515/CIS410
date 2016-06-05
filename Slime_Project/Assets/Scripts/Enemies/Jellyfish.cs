@@ -38,6 +38,7 @@ public class Jellyfish : Enemy {
 		case "burn":
 			Hp -= 0.01f;
 			if (Hp <= 0) {
+				PlayerController.energy += 3;
 				GameObject deadcopy = Instantiate (dead, transform.position, transform.rotation) as GameObject;
 				Destroy (deadcopy, 1);
 				Destroy (gameObject);
