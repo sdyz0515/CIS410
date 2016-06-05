@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
 	private string[] Level_list = {"Level_0","Level_1","Level_2","Level_3","Level_4","Level_5"};
 	private bool ifdead = false;
 	private Vector2 enemyForce;
-	//private Vector2 toEnemyForce;
+	private Vector2 toEnemyForce;
 
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 		enemyForce = new Vector2 (direction * 5000f, 0f);
-		//toEnemyForce = new Vector2 (-1 * direction * 5000f, 0f);
+		toEnemyForce = new Vector2 (-1 * direction * 5000f, 0f);
 
 		switch (other.tag) {
 		case "Boss":
@@ -246,7 +246,7 @@ public class PlayerController : MonoBehaviour
 				if (!invincible) {
 					rb2d.AddForce (enemyForce);
 					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					//Enemy.AddForce (toEnemyForce);
+					Enemy.AddForce (toEnemyForce);
 				}
 			}
 			break;
@@ -264,7 +264,7 @@ public class PlayerController : MonoBehaviour
 				rb2d.AddForce (enemyForce);
 				if (!invincible) {
 					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					//Enemy.AddForce (toEnemyForce);
+					Enemy.AddForce (toEnemyForce);
 				}
 			}
 			break;
@@ -288,7 +288,7 @@ public class PlayerController : MonoBehaviour
 				if (!invincible) {
 					rb2d.AddForce (enemyForce);
 					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					//Enemy.AddForce (toEnemyForce);
+					Enemy.AddForce (toEnemyForce);
 				}
 			}
 			break;
@@ -305,24 +305,7 @@ public class PlayerController : MonoBehaviour
 				if (!invincible) {
 					rb2d.AddForce (enemyForce);
 					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					//Enemy.AddForce (toEnemyForce);
-				}
-			}
-			break;
-
-		case "Skeleton":
-			if (eating) {
-				Destroy (other.gameObject);
-				Add_ability (5);
-				EatingMode (false);
-				SoundManager.instance.PlaySingle (eatEnemySound);
-			} else {
-				isJumping = true;
-				loseHP ();
-				if (!invincible) {
-					rb2d.AddForce (enemyForce);
-					Rigidbody2D Enemy = other.GetComponent<Rigidbody2D> ();
-					//Enemy.AddForce (toEnemyForce);
+					Enemy.AddForce (toEnemyForce);
 				}
 			}
 			break;
