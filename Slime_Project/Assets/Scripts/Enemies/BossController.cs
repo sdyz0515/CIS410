@@ -116,7 +116,7 @@ public class BossController: Enemy {
 			break;
 
 		case "Electric_Shield":
-			Hp-= 3.0f;
+			Hp-= 2.0f;
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			if (Hp <= 0){
 				Boss_Dead ();
