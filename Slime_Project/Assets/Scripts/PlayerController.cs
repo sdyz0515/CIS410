@@ -268,7 +268,7 @@ public class PlayerController : MonoBehaviour
 			Debug.Log ("Skeleton");
 			if (eating) {
 				Destroy (other.gameObject);
-				Add_ability (1);
+				Add_ability (5);
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
