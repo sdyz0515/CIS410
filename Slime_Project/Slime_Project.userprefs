@@ -2,20 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerController.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerController.cs" Line="249" Column="1" />
-      <File FileName="Assets/Scripts/MushroomFlash.cs" Line="6" Column="65" />
-      <File FileName="Assets/Scripts/GameManager.cs" Line="61" Column="17" />
-      <File FileName="Assets/Scripts/Enemies/Enemy.cs" Line="49" Column="33" />
-      <File FileName="Assets/Scripts/Enemies/Enemy_Frog.cs" Line="83" Column="6" />
-      <File FileName="Assets/Scripts/Enemies/Dragon_Enemy.cs" Line="61" Column="4" />
-      <File FileName="Assets/Scripts/Enemies/Dragon_Enemy_Blue.cs" Line="59" Column="34" />
-      <File FileName="Assets/Scripts/Enemies/Dragon_Enemy_Green.cs" Line="59" Column="34" />
-      <File FileName="Assets/Scripts/Enemies/Eye_Monster.cs" Line="57" Column="34" />
-      <File FileName="Assets/Scripts/Enemies/Fish.cs" Line="46" Column="34" />
-      <File FileName="Assets/Scripts/Enemies/Jellyfish.cs" Line="41" Column="34" />
-      <File FileName="Assets/Scripts/Enemies/Skele_Enemy.cs" Line="56" Column="14" />
-      <File FileName="Assets/Scripts/Enemies/BossController.cs" Line="10" Column="23" />
-      <File FileName="Assets/Scripts/Boundary.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Enemies/BossController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Wall.cs" Line="13" Column="31" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="226" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

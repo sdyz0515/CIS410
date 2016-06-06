@@ -109,7 +109,7 @@ public class Dragon_Enemy_Blue : Enemy {
 			break;
 
 		case "Electric_Shield":
-			Hp-= 0.5f;
+			Hp-= 3f;
 			SoundManager.instance.PlaySingle (enemyHitSound);
 			Death (Hp,gameObject);
 			break;

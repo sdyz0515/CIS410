@@ -94,6 +94,7 @@
      <Compile Include="Assets\Scripts\Weapon_dragon_G.cs" />
      <Compile Include="Assets\Scripts\Weapon_fish.cs" />
      <Compile Include="Assets\Scripts\generate_eBall.cs" />
+     <Compile Include="Assets\Scripts\shield.cs" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>

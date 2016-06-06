@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 			
 			grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
 			wallTouch = Physics2D.OverlapArea (pointA, pointB, whatIsGround_1);
-			Debug.Log (wallCheck);
+			//Debug.Log (wallCheck);
 			float move = Input.GetAxis ("Horizontal");
 			Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
 			if (wallTouch || invincible) {
@@ -232,7 +232,7 @@ public class PlayerController : MonoBehaviour
 		if (!IfHas) {
 
 			if (GameManager.Ability_num >= 3) {
-				GameManager.Ability_List [0] = num;
+				GameManager.Ability_List [GameManager.Ability_Index] = num;
 			} else
 				GameManager.Ability_List [GameManager.Ability_num] = num;
 			GameManager.Ability_num++;
@@ -265,10 +265,9 @@ public class PlayerController : MonoBehaviour
 			break;
 
 		case "Skeleton":
-			Debug.Log ("Skeleton");
 			if (eating) {
 				Destroy (other.gameObject);
-				Add_ability (1);
+				Add_ability (5);
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
@@ -356,6 +355,23 @@ public class PlayerController : MonoBehaviour
 				loseHP ();
 				StartCoroutine(CancelEnemyFreeze(Enemy, originalConstraints));
 			}
+			break;
+
+		case "Ability_0":
+			Add_ability (0);
+			Destroy (other.gameObject);
+			break;
+		case "Ability_1":
+			Add_ability (1);
+			Destroy (other.gameObject);
+			break;
+		case "Ability_2":
+			Add_ability (2);
+			Destroy (other.gameObject);
+			break;
+		case "Ability_3":
+			Add_ability (3);
+			Destroy (other.gameObject);
 			break;
 
 		case "Enemy_Eball":

@@ -18,8 +18,8 @@ public class Ice_Block : MonoBehaviour {
 		{
 			Destroy (other.gameObject);
 			Destroy (gameObject);
-		}
-		else 
+		} 
+		else if (other.CompareTag("Ice_Bolt") || other.CompareTag("Enemy_Bolt") || other.CompareTag("Bolt"))
 			Destroy (other.gameObject);
 	}
 }
