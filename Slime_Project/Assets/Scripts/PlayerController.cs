@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
 			
 			grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
 			wallTouch = Physics2D.OverlapArea (pointA, pointB, whatIsGround_1);
-			//Debug.Log (wallCheck);
+			Debug.Log (wallCheck);
 			float move = Input.GetAxis ("Horizontal");
 			Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
 			if (wallTouch || invincible) {
@@ -265,9 +265,10 @@ public class PlayerController : MonoBehaviour
 			break;
 
 		case "Skeleton":
+			Debug.Log ("Skeleton");
 			if (eating) {
 				Destroy (other.gameObject);
-				Add_ability (5);
+				Add_ability (1);
 				EatingMode (false);
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			} else {
@@ -357,23 +358,6 @@ public class PlayerController : MonoBehaviour
 			}
 			break;
 
-		case "Ability_0":
-			Add_ability (0);
-			Destroy (other.gameObject);
-			break;
-		case "Ability_1":
-			Add_ability (1);
-			Destroy (other.gameObject);
-			break;
-		case "Ability_2":
-			Add_ability (2);
-			Destroy (other.gameObject);
-			break;
-		case "Ability_3":
-			Add_ability (3);
-			Destroy (other.gameObject);
-			break;
-
 		case "Enemy_Eball":
 			rb2d.AddForce (enemyForce);
 			isJumping = true;
@@ -420,7 +404,23 @@ public class PlayerController : MonoBehaviour
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			}
 			break;
-
+		case "Ability_0":
+				Add_ability (0);
+				Destroy (other.gameObject);
+				break;
+		case "Ability_1":
+				Add_ability (1);
+				Destroy (other.gameObject);
+				break;
+		case "Ability_2":
+				Add_ability (2);
+				Destroy (other.gameObject);
+				break;
+		case "Ability_3":
+				Add_ability (3);
+				Destroy (other.gameObject);
+				break;
+		
 		default:
 			break;
 		}
@@ -447,6 +447,7 @@ public class PlayerController : MonoBehaviour
 			Flip ();
 			facingRight = true;
 		}
+
 		Application.LoadLevel (Level_list[GameManager.level]);
 		SoundManager.instance.PlayNextBGM (GameManager.level);
 	}

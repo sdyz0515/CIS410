@@ -9,7 +9,7 @@ public class Meteor_Creator: MonoBehaviour {
 
 	void Start ()
 	{	
-		InvokeRepeating ("Meteor", 1, Random.Range(1,5));
+		InvokeRepeating ("Meteor", Random.Range(1,3), Random.Range(3,7));
 	}
 
 	void Meteor()
