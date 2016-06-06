@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
 	private bool ifdead = false;
 	private Vector2 enemyForce;
 	private float[] transpa = { 0.2f, 1f };
+	private int level_lock = 0;
 
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
@@ -56,7 +57,8 @@ public class PlayerController : MonoBehaviour
 	public AudioClip hitSound;
 
 	void Start () 
-	{
+	{   
+		level_lock = 0;
 		if (GameManager.SlimeDead) {
 			HP = 6;
 			energy = 0;
@@ -441,8 +443,10 @@ public class PlayerController : MonoBehaviour
 	}
 
 	private void Restart()
-	{	
-		GameManager.level++;
+	{	if (level_lock == 0) {
+			GameManager.level++;
+			level_lock = 1;
+		}
 		if (!facingRight) {
 			Flip ();
 			facingRight = true;
