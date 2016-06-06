@@ -95,7 +95,6 @@ public class PlayerController : MonoBehaviour
 			
 			grounded = Physics2D.OverlapCircle (groundCheck.position, groundRadius, whatIsGround);
 			wallTouch = Physics2D.OverlapArea (pointA, pointB, whatIsGround_1);
-			Debug.Log (wallCheck);
 			float move = Input.GetAxis ("Horizontal");
 			Vector2 movement = new Vector2 (move * maxSpeed, rb2d.velocity.y);
 			if (wallTouch || invincible) {
