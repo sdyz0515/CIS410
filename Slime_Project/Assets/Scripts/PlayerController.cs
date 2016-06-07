@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
 	private float[] transpa = { 0.2f, 1f };
 	private int level_lock = 0;
 
+
 	public AudioClip jumpSound;
 	public AudioClip getHpSound;
 	public AudioClip eatingModeSound;
@@ -58,6 +59,7 @@ public class PlayerController : MonoBehaviour
 
 	void Start () 
 	{   
+		Weapon.disable_weapon = false;
 		level_lock = 0;
 		if (GameManager.SlimeDead) {
 			HP = 6;
@@ -402,6 +404,7 @@ public class PlayerController : MonoBehaviour
 				else
 					transform.localScale -= new Vector3(-0.2f,0.2f,0f);
 				EatingMode (false);
+				Weapon.disable_weapon = true;
 				SoundManager.instance.PlaySingle (eatEnemySound);
 			}
 			break;

@@ -7,13 +7,14 @@ public class Weapon : MonoBehaviour {
 	public List<GameObject> shots;
 	private float nextFire;
 	public static int fireMode = 0;
+	public static bool disable_weapon = false;
 	public Vector2 offset;
 
 	private Vector2 pos;
 
 	void Update() 
 	{	
-		if ((Input.GetButton ("Fire1") || Input.GetKey(KeyCode.Z)) && Time.time > nextFire) 
+		if ((Input.GetButton ("Fire1") || Input.GetKey(KeyCode.Z)) && Time.time > nextFire && !disable_weapon) 
 		{
 			nextFire = Time.time + fireRate;
 			if (fireMode == 3) {
