@@ -1,4 +1,4 @@
-#Slime?! Operations
+Slime?! Operations
 
 - Arrow Key: move
 - Space: jump
@@ -6,5 +6,4 @@
 - X: switch ability
 - C: enter eating mode
 
-#Play Online
-https://www.cs.uoregon.edu/Classes/16S/cis410gameprog/projects/resources/Slime.html
+Build for Mac OS, recommended resolution 800x500
